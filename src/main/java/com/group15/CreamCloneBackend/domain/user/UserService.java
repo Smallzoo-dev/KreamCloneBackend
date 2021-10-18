@@ -15,12 +15,14 @@ public class UserService {
     private final JwtTokenProvider jwtTokenProvider;
 
     //회원가입
-    public void usersignup(UserRequestDto userRequestDto){
+    public UserResponseDto usersignup(UserRequestDto userRequestDto){
 
         String encodingPw = passwordEncoder.encode(userRequestDto.getPassword());
         User user = new User(userRequestDto.getUsername(),encodingPw);
 
         userRepository.save(user);
+
+        return new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(),ResponseMsg.MSG_SUCCESS_SIGNUP.getMsg());
 
     }
 
@@ -31,17 +33,17 @@ public class UserService {
 
         if (!user.isPresent()){
 
-            return new UserResponseDto(StatusCode.STATUS_FAILE,ResponseMsg.MSG_FAILE_LOGIN_USERNAME);
+            return new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(),ResponseMsg.MSG_FAILE_LOGIN_USERNAME.getMsg());
 
         }else if (!user.get().getPassword().equals(userRequestDto.getPassword())){
 
-            return new UserResponseDto(StatusCode.STATUS_FAILE,ResponseMsg.MSG_FAILE_LOGIN_PASSWORD);
+            return new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(),ResponseMsg.MSG_FAILE_LOGIN_PASSWORD.getMsg());
 
         }
         //로그인 성공 시
         String token = jwtTokenProvider.createToken(userRequestDto.getUsername());
 
-        return new UserResponseDto(StatusCode.STATUS_SUCCESS,ResponseMsg.MSG_SUCCESS_LOGIN,token);
+        return new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(),ResponseMsg.MSG_SUCCESS_LOGIN.getMsg(),token);
 
     }
 

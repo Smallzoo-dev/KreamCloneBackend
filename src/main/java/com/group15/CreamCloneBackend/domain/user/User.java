@@ -18,7 +18,7 @@ import static javax.persistence.FetchType.LAZY;
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -32,9 +32,9 @@ public class User {
     @OneToMany(mappedBy = "user",fetch = LAZY, cascade = CascadeType.ALL)
     private List<Order> joinedOrderList = new ArrayList<>();
 
-    public User(String username ,String pw){
+    public User(String username ,String password){
         this.username=username;
-        this.password=pw;
+        this.password=password;
     }
 
 

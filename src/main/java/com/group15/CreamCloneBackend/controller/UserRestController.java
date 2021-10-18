@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 public class UserRestController {
-    UserService userService;
+    private final UserService userService;
 
     //회원가입
     @ApiOperation(value = "회원가입",notes = "회원가입")
     @PostMapping("/user/signup")
     public UserResponseDto userSignup(@RequestBody UserRequestDto userRequestDto){
-        userService.usersignup(userRequestDto);
-        return new UserResponseDto(StatusCode.STATUS_SUCCESS,ResponseMsg.MSG_SUCCESS_SIGNUP);
+
+        return userService.usersignup(userRequestDto);
 
     }
 
@@ -38,9 +38,9 @@ public class UserRestController {
     @GetMapping("/user/logincheck")
     public UserResponseDto userLoginCheck(@AuthenticationPrincipal UserDetailsImpl userDetails){
         if (userDetails==null){
-            return new UserResponseDto(StatusCode.STATUS_FAILE,ResponseMsg.MSG_IS_ANONYMOUS);
+            return new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(),ResponseMsg.MSG_IS_ANONYMOUS.getMsg());
         }
-        return new UserResponseDto(StatusCode.STATUS_SUCCESS,ResponseMsg.MSG_IS_USER);
+        return new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(),ResponseMsg.MSG_IS_USER.getMsg());
 
     }
 
