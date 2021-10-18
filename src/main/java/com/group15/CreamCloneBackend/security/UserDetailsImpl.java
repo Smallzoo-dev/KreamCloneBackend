@@ -1,5 +1,6 @@
 package com.group15.CreamCloneBackend.security;
 
+import com.group15.CreamCloneBackend.domain.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +18,11 @@ public class UserDetailsImpl implements UserDetails {
 
     public User getUser() {
         return user;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
     }
 
     @Override
@@ -49,15 +55,4 @@ public class UserDetailsImpl implements UserDetails {
         return true;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        RoleEnum userRole = user.getRole();
-        String authority = userRole.getAuthority();
-
-        SimpleGrantedAuthority simpleAuthority = new SimpleGrantedAuthority(authority);
-        Collection<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(simpleAuthority);
-
-        return authorities;
-    }
 }

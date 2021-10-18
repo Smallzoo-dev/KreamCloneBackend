@@ -32,6 +32,10 @@ public class User {
     @OneToMany(mappedBy = "user",fetch = LAZY, cascade = CascadeType.ALL)
     private List<Order> joinedOrderList = new ArrayList<>();
 
+    public User(String username ,String pw){
+        this.username=username;
+        this.password=pw;
+    }
 
 
 }
