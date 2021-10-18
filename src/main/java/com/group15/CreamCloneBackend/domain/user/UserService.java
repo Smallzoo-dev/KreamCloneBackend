@@ -1,5 +1,6 @@
 package com.group15.CreamCloneBackend.domain.user;
 
+import com.group15.CreamCloneBackend.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private final Jw;
+    private final JwtTokenProvider jwtTokenProvider;
 
     public void usersignup(UserRequestDto userRequestDto){
 
@@ -36,9 +37,9 @@ public class UserService {
             return new UserResponseDto(StatusCode.STATUS_FAILE,ResponseMsg.MSG_FAILE_LOGIN_PASSWORD);
 
         }
-        String token = jwt
+        String token = jwtTokenProvider.createToken(userRequestDto.getUsername());
 
-        return new UserResponseDto(StatusCode.STATUS_SUCCESS,ResponseMsg.MSG_SUCCESS_LOGIN);
+        return new UserResponseDto(StatusCode.STATUS_SUCCESS,ResponseMsg.MSG_SUCCESS_LOGIN,token);
 
     }
 }
