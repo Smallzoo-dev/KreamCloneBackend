@@ -28,7 +28,7 @@ public class UserRestController {
 
     //로그인
     @ApiOperation(value = "로그인",notes = "로그인")
-    @PostMapping("/user/signup")
+    @PostMapping("/user/login")
     public UserResponseDto userLogin(@RequestBody UserRequestDto userRequestDto){
         return userService.userlogin(userRequestDto);
 

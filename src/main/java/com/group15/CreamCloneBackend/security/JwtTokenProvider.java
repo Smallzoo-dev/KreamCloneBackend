@@ -19,7 +19,7 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private String secretKey = ""; // 암호 키 설정
+    private String secretKey = "sssdftger"; // 암호 키 설정
     SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256; // 알고리즘 선택
 
 

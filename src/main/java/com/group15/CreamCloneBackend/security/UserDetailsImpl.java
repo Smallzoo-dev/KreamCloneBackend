@@ -2,10 +2,8 @@ package com.group15.CreamCloneBackend.security;
 
 import com.group15.CreamCloneBackend.domain.user.User;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 public class UserDetailsImpl implements UserDetails {
