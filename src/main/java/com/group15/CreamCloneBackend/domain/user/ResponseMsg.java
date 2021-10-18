@@ -1,5 +1,8 @@
 package com.group15.CreamCloneBackend.domain.user;
 
+import lombok.Getter;
+
+@Getter
 public enum ResponseMsg {
 
     MSG_SUCCESS_SIGNUP("회원가입 성공"),
