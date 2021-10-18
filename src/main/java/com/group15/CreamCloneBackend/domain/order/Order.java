@@ -12,7 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Order {
+public class Order extends TimeStamped{
 
     @Id
     @GeneratedValue
@@ -32,6 +32,31 @@ public class Order {
     private TradingRole tradingRole;
 
     private Long price;
+
+
+    /**
+     * 연관관계 편의 메서드
+     */
+
+    public void setUser(User user) {
+        this.user = user;
+        user.getJoinedOrderList().add(this);
+    }
+
+    public void setShoes(Shoes shoes) {
+        this.shoes = shoes;
+        shoes.getInTradeList().add(this);
+    }
+
+    public static Order createOrder(User user, Shoes shoes, TradingRole tradingRole, String shoesSize, Long price) {
+        Order order = new Order();
+        order.setUser(user);
+        order.setShoes(shoes);
+        order.setTradingRole(tradingRole);
+        order.setShoesSize(shoesSize);
+        order.setPrice(price);
+        return order;
+    }
 
 
 
