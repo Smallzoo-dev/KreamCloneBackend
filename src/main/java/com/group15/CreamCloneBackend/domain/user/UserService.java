@@ -12,7 +12,7 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private final Jw;
+//    private final Jw;
 
     public void usersignup(UserRequestDto userRequestDto){
 
@@ -36,7 +36,7 @@ public class UserService {
             return new UserResponseDto(StatusCode.STATUS_FAILE,ResponseMsg.MSG_FAILE_LOGIN_PASSWORD);
 
         }
-        String token = jwt
+//        String token = jwt
 
         return new UserResponseDto(StatusCode.STATUS_SUCCESS,ResponseMsg.MSG_SUCCESS_LOGIN);
 

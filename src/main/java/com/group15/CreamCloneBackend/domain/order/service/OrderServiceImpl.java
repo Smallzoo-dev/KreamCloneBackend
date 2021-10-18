@@ -1,16 +1,31 @@
 package com.group15.CreamCloneBackend.domain.order.service;
 
+import com.group15.CreamCloneBackend.domain.enduporder.EndUpOrder;
+import com.group15.CreamCloneBackend.domain.enduporder.repository.EndUpOrderRepository;
+import com.group15.CreamCloneBackend.domain.order.Order;
 import com.group15.CreamCloneBackend.domain.order.TradeType;
 import com.group15.CreamCloneBackend.domain.order.TradingRole;
 import com.group15.CreamCloneBackend.domain.order.repository.OrderRepository;
+import com.group15.CreamCloneBackend.domain.product.repository.ShoesRepository;
+import com.group15.CreamCloneBackend.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+import static com.group15.CreamCloneBackend.domain.order.TradeType.*;
+import static com.group15.CreamCloneBackend.domain.order.TradingRole.*;
 
 @Service
 @RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
+    private final ShoesRepository shoesRepository;
+    private final UserRepository userRepository;
+    private final EndUpOrderRepository endUpOrderRepository;
+
 
     /**
      * 판매 요청인 경우
@@ -39,27 +54,83 @@ public class OrderServiceImpl implements OrderService {
 
     //분기용 메서드
     @Override
-    public Long order(Long memberId, Long shoesId, TradingRole tradingRole, TradeType tradeType, String shoeSize, Long price) {
-        return null;
+    public Long order(Long userId, Long shoesId, TradingRole tradingRole, TradeType tradeType, String shoeSize, Long price) {
+        if (tradeType.equals(Bidding)) {
+            if (tradingRole.equals(BUYER)) {
+                Long orderId = buyOrdercreate(userId, shoesId, tradingRole, shoeSize, price);
+                return orderId;
+            } else {
+                Long endUpOrderId = buyOrdermatch(shoesId, userId, price);
+                return endUpOrderId;
+            }
+        } else {
+            if (tradingRole.equals(BUYER)) {
+                Long orderId = sellOrdercreate(userId, shoesId, tradingRole, shoeSize, price);
+                return orderId;
+            } else {
+                Long endUpOrderId = sellOrdermatch(shoesId, userId, price);
+                return endUpOrderId;
+            }
+
+        }
+
     }
 
     @Override
-    public void buyOrdercreate() {
+    public Long buyOrdercreate(Long memberId, Long shoesId, TradingRole tradingRole, String shoesSize, Long price) {
+        Order order = Order.createOrder(
+                //예외처리
+                userRepository.findById(memberId).orElseThrow(()->new IllegalArgumentException("id not found")),
+                shoesRepository.findById(shoesId).orElseThrow(()->new IllegalArgumentException("id not found")),
+                tradingRole,
+                shoesSize,
+                price);
+
+        orderRepository.save(order);
+        return order.getId();
+    }
+
+    @Override
+    public Long buyOrdermatch(Long shoesId, Long userId, Long price) {
+        List<Order> matchList = orderRepository.findAllByPriceOrderByCreatedAtDesc(price);
+
+        EndUpOrder endUpOrder = EndUpOrder.createEndUpOrder(
+                shoesRepository.findById(shoesId).orElseThrow(() -> new IllegalArgumentException("id not found")),
+                price,
+                userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("not found")).getUsername(),
+                matchList.get(0).getUser().getUsername());
+
+        endUpOrderRepository.save(endUpOrder);
+        return endUpOrder.getId();
 
     }
 
     @Override
-    public void buyOrdermatch() {
+    public Long sellOrdercreate(Long memberId, Long shoesId, TradingRole tradingRole, String shoesSize, Long price) {
+        Order order = Order.createOrder(
+                userRepository.findById(memberId).orElseThrow(()->new IllegalArgumentException("id not found")),
+                shoesRepository.findById(shoesId).orElseThrow(()->new IllegalArgumentException("id not found")),
+                tradingRole,
+                shoesSize,
+                price);
+
+        orderRepository.save(order);
+        return order.getId();
 
     }
 
     @Override
-    public void sellOrdercreate() {
+    public Long sellOrdermatch(Long shoesId, Long userId, Long price) {
+        List<Order> matchList = orderRepository.findAllByPriceOrderByCreatedAtDesc(price);
 
-    }
+        EndUpOrder endUpOrder = EndUpOrder.createEndUpOrder(
+                shoesRepository.findById(shoesId).orElseThrow(() -> new IllegalArgumentException("id not found")),
+                price,
+                matchList.get(0).getUser().getUsername(),
+                userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("not found")).getUsername());
 
-    @Override
-    public void sellOrdermatch() {
+        endUpOrderRepository.save(endUpOrder);
+        return endUpOrder.getId();
 
     }
 

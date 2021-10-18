@@ -9,11 +9,11 @@ public interface OrderService {
 
     public Long order(Long memberId, Long shoesId, TradingRole tradingRole, TradeType tradeType, String shoeSize, Long price);
 
-    public void buyOrdercreate();
+    public Long buyOrdercreate(Long memberId, Long shoesId, TradingRole tradingRole, String shoesSize, Long price);
 
-    public void buyOrdermatch();
+    public Long buyOrdermatch(Long shoesId, Long userId, Long price);
 
-    public void sellOrdercreate();
+    public Long sellOrdercreate(Long memberId, Long shoesId, TradingRole tradingRole, String shoesSize, Long price);
 
-    public void sellOrdermatch();
+    public Long sellOrdermatch(Long shoesId, Long userId, Long price);
 }
