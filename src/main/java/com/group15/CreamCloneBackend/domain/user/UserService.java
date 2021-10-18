@@ -4,7 +4,6 @@ import com.group15.CreamCloneBackend.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -15,6 +14,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
+    //회원가입
     public void usersignup(UserRequestDto userRequestDto){
 
         String encodingPw = passwordEncoder.encode(userRequestDto.getPassword());
@@ -24,7 +24,8 @@ public class UserService {
 
     }
 
-    public  UserResponseDto userlogin(UserRequestDto userRequestDto){
+    //로그인
+    public UserResponseDto userlogin(UserRequestDto userRequestDto){
 
         Optional<User> user = userRepository.findByUsername(userRequestDto.getUsername());
 
@@ -37,9 +38,12 @@ public class UserService {
             return new UserResponseDto(StatusCode.STATUS_FAILE,ResponseMsg.MSG_FAILE_LOGIN_PASSWORD);
 
         }
+        //로그인 성공 시
         String token = jwtTokenProvider.createToken(userRequestDto.getUsername());
 
         return new UserResponseDto(StatusCode.STATUS_SUCCESS,ResponseMsg.MSG_SUCCESS_LOGIN,token);
 
     }
+
+
 }

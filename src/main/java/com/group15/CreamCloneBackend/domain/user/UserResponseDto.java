@@ -10,6 +10,7 @@ public class UserResponseDto {
         this.responseMsg=msg;
     }
 
+    //로그인 시 발급되는 토큰값과 같이 응답
     public UserResponseDto(StatusCode statusCode, ResponseMsg msg, String token) {
         this.statusCode=statusCode;
         this.responseMsg=msg;
