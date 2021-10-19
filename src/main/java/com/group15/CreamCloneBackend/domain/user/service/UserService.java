@@ -1,7 +1,14 @@
-package com.group15.CreamCloneBackend.domain.user;
+package com.group15.CreamCloneBackend.domain.user.service;
 
 import com.group15.CreamCloneBackend.domain.product.Shoes;
-import com.group15.CreamCloneBackend.domain.product.ShoesRepository;
+import com.group15.CreamCloneBackend.domain.product.repository.ShoesRepository;
+import com.group15.CreamCloneBackend.domain.user.*;
+import com.group15.CreamCloneBackend.domain.user.Enum.ResponseMsg;
+import com.group15.CreamCloneBackend.domain.user.Enum.StatusCode;
+import com.group15.CreamCloneBackend.domain.user.dto.UserRequestDto;
+import com.group15.CreamCloneBackend.domain.user.dto.UserResponseDto;
+import com.group15.CreamCloneBackend.domain.user.repository.UserRepository;
+import com.group15.CreamCloneBackend.domain.user.repository.UserShoesRepository;
 import com.group15.CreamCloneBackend.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -93,7 +100,7 @@ public class UserService {
                 userShoesRepository.delete(findUser);
                 userResponseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(),ResponseMsg.MSG_FAILE_BOOKMARK.getMsg() );
             }
-            return userResponseDto;
+
         }
         return userResponseDto;
     }

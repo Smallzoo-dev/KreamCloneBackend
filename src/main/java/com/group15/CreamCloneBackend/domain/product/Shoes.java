@@ -26,11 +26,28 @@ public class Shoes {
 
     private String ImgUrl;
 
-    private Long priceOriginal;
+    private String priceOriginal;
+
+    private String modelName;
+
+    private String releaseDate;
+
 
     private String modelNumber;
 
-    private Long bookmarkCnt=0L;
+    private String image;
+
+    private Long bookmarkCnt;
+
+    public Shoes(ProductDto productDto){
+        this.bookmarkCnt = 0L;
+        this.image = productDto.getImage();
+        this.brand = productDto.getBrand();
+        this.modelNumber = productDto.getModelNumber();
+        this.modelName = productDto.getModelName();
+        this.priceOriginal = productDto.getPriceOriginal();
+        this.releaseDate = productDto.getReleaseDate();
+    }
 
 
     @JsonIgnore
