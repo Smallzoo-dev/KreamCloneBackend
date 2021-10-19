@@ -136,7 +136,6 @@ public class OrderServiceImpl implements OrderService {
 
     // 사이즈별 매물 가격 조회
     public SizePriceResponseDto getSizePrice(Long shoesId) {
-//        Shoes shoesFound = shoesRepository.findById(shoesId).orElseThrow(() -> new IllegalArgumentException("shoes not found"));
         SizePrice sizePrice = findPriceFromDB(shoesId);
         return new SizePriceResponseDto(sizePrice, 200L, "모든 사이즈 즉시 구매가 조회 성공");
     }

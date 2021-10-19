@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.group15.CreamCloneBackend.domain.enduporder.EndUpOrder;
 import com.group15.CreamCloneBackend.domain.order.Order;
 import com.group15.CreamCloneBackend.domain.user.UserShoes;
+import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,9 +24,12 @@ public class Shoes {
 
     private String brandName;
 
+    private String ImgUrl;
+
     private Long officialPrice;
 
     private String modelNum;
+
 
     @JsonIgnore
     @OneToMany(mappedBy = "shoes")
