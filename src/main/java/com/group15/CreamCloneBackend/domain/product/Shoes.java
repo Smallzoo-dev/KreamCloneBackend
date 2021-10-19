@@ -22,9 +22,15 @@ public class Shoes {
 
     private String brand;
 
-    private Long priceOriginal;
+    private String image;
+
+    private String priceOriginal;
 
     private String modelNumber;
+
+    private String modelName;
+
+    private String releaseDate;
 
     private Long bookmarkCnt=0L;
 
@@ -37,6 +43,17 @@ public class Shoes {
 
     @OneToMany(mappedBy = "shoes", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<UserShoes> likedUserList;
+
+
+    public Shoes(ProductDto productDto){
+        this.bookmarkCnt = 0L;
+        this.image = productDto.getImage();
+        this.brand = productDto.getBrand();
+        this.modelNumber = productDto.getModelNumber();
+        this.modelName = productDto.getModelName();
+        this.priceOriginal = productDto.getPriceOriginal();
+        this.releaseDate = productDto.getReleaseDate();
+    }
 
 
 }

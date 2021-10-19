@@ -9,7 +9,7 @@ import com.group15.CreamCloneBackend.domain.order.dto.*;
 import com.group15.CreamCloneBackend.domain.order.repository.OrderRepository;
 import com.group15.CreamCloneBackend.domain.product.Shoes;
 import com.group15.CreamCloneBackend.domain.product.repository.ShoesRepository;
-import com.group15.CreamCloneBackend.domain.user.UserRepository;
+import com.group15.CreamCloneBackend.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
