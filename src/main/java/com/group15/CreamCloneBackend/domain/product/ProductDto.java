@@ -16,7 +16,4 @@ public class ProductDto {
 
     private String releaseDate;
 
-
-
-
 }
