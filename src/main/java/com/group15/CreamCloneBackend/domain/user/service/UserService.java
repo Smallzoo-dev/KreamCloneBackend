@@ -67,33 +67,36 @@ public class UserService {
 
     //북마크
     @Transactional
-    public UserResponseDto bookmark(User user, Long productId){
+    public UserResponseDto bookmark(User user, Long productId, Boolean bookmark){
 
 
         UserResponseDto userResponseDto;
 
-        UserShoes findUser = userShoesRepository.findByUser(user);
         Optional<Shoes> shoes = shoesRepository.findById(productId);
         //신발 정보가 존재하는지 체크
-        if (!shoes.isPresent()){
+        if (shoes.isEmpty()){
 
             userResponseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(),ResponseMsg.MSG_NOFOUND_SHOES.getMsg() );
 
         }else {
 
-            if (findUser==null){ //북마크가 되어있지 않을 때 북마크 추가
+            if (!bookmark){ //북마크가 되어있지 않을 때 북마크 추가
                 shoes.get().setBookmarkCnt(shoes.get().getBookmarkCnt()+1L);
                 Shoes shoes1 = shoes.get();
                 UserShoes userShoes = new UserShoes(user,shoes1);
                 userShoesRepository.save(userShoes);
-                userResponseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(), ResponseMsg.MSG_FAILE_SIGNUP.getMsg(),shoes1.getBookmarkCnt());
+                userResponseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(),
+                        ResponseMsg.MSG_FAILE_SIGNUP.getMsg(),
+                        shoes1.getBookmarkCnt());
             }
 
             else { //북마크가 되어있을 때 북마크 삭제
                 shoes.get().setBookmarkCnt(shoes.get().getBookmarkCnt()-1L);
                 Shoes shoes1 = shoes.get();
-                userShoesRepository.delete(findUser);
-                userResponseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(),ResponseMsg.MSG_FAILE_BOOKMARK.getMsg(),shoes1.getBookmarkCnt() );
+                userShoesRepository.delete(userShoesRepository.findByUserAndShoes(user,shoes1));
+                userResponseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(),
+                        ResponseMsg.MSG_SUCCESS_DEL_BOOKMARK.getMsg(),
+                        shoes1.getBookmarkCnt());
             }
 
         }
