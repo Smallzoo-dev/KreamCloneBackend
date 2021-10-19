@@ -45,4 +45,15 @@ public class UserRestController {
 
     }
 
+
+    //북마크
+    @ApiOperation(value = "북마크",notes = "북마크 여부 리턴- 북마크 성공:200 해제:500")
+    @PostMapping("/user/login")
+    public UserResponseDto bookmark(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                    @RequestBody Long productId ){
+        return userService.bookmark(userDetails.getUser(),productId);
+
+    }
+
+
 }

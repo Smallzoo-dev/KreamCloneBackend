@@ -27,4 +27,9 @@ public class UserShoes {
     @JoinColumn(name = "shoesId")
     @JsonIgnore
     Shoes shoes;
+
+    public UserShoes(User user,Shoes shoes){
+        this.user = user;
+        this.shoes = shoes;
+    }
 }

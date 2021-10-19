@@ -1,5 +1,7 @@
 package com.group15.CreamCloneBackend.domain.user;
 
+import com.group15.CreamCloneBackend.domain.product.Shoes;
+import com.group15.CreamCloneBackend.domain.product.ShoesRepository;
 import com.group15.CreamCloneBackend.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,6 +16,9 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final UserShoesRepository userShoesRepository;
+    private final ShoesRepository shoesRepository;
+
 
     //회원가입
     public UserResponseDto usersignup(UserRequestDto userRequestDto) {
@@ -34,9 +39,10 @@ public class UserService {
         User user = userRepository.findByUsername(userRequestDto.getUsername());
 
         if (user==null) {
+
             responseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(), ResponseMsg.MSG_FAILE_LOGIN_USERNAME.getMsg());
+
         } else if (!passwordEncoder.matches(userRequestDto.getPassword(), user.getPassword())) {
-            System.out.println(passwordEncoder.matches(userRequestDto.getPassword(), user.getPassword()));
 
             responseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(), ResponseMsg.MSG_FAILE_LOGIN_PASSWORD.getMsg());
 
@@ -49,5 +55,39 @@ public class UserService {
         return responseDto;
     }
 
+    //북마크
+    public UserResponseDto bookmark(User user, Long productId){
+
+        UserResponseDto userResponseDto;
+
+        UserShoes findUser = userShoesRepository.findByUser(user);
+        Optional<Shoes> shoes = shoesRepository.findById(productId);
+        if (!shoes.isPresent()){
+            userResponseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(),ResponseMsg.MSG_NOFOUND_SHOES.getMsg() );
+
+        }else {
+            Shoes shoes1 = shoes.get();
+            //북마크가 되어있지 않을 때 북마크 추가
+            if (findUser==null){
+
+                UserShoes userShoes = new UserShoes(user,shoes1);
+                userShoesRepository.save(userShoes);
+                userResponseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(), ResponseMsg.MSG_FAILE_SIGNUP.getMsg());
+            }
+            //북마크가 되어있을 때 북마크 삭제
+            else {
+                userShoesRepository.delete(findUser);
+                userResponseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(),ResponseMsg.MSG_FAILE_BOOKMARK.getMsg() );
+
+            }
+            return userResponseDto;
+        }
+
+
+
+        return userResponseDto;
+
+    }
 
 }
+
