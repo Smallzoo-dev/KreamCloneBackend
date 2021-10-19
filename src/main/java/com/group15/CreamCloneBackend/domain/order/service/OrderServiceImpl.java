@@ -5,10 +5,7 @@ import com.group15.CreamCloneBackend.domain.enduporder.repository.EndUpOrderRepo
 import com.group15.CreamCloneBackend.domain.order.Order;
 import com.group15.CreamCloneBackend.domain.order.TradeType;
 import com.group15.CreamCloneBackend.domain.order.TradingRole;
-import com.group15.CreamCloneBackend.domain.order.dto.OrderResponseDto;
-import com.group15.CreamCloneBackend.domain.order.dto.SingleSizeResponseDto;
-import com.group15.CreamCloneBackend.domain.order.dto.SizePrice;
-import com.group15.CreamCloneBackend.domain.order.dto.SizePriceResponseDto;
+import com.group15.CreamCloneBackend.domain.order.dto.*;
 import com.group15.CreamCloneBackend.domain.order.repository.OrderRepository;
 import com.group15.CreamCloneBackend.domain.product.Shoes;
 import com.group15.CreamCloneBackend.domain.product.repository.ShoesRepository;
@@ -17,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.group15.CreamCloneBackend.domain.order.TradeType.*;
@@ -87,8 +85,7 @@ public class OrderServiceImpl implements OrderService {
     // 원하는 가격으로 구매 (구매 입찰 중 최저가 매물 order 삭제)
     @Override
     public Long buyOrdermatch(Long shoesId, Long userId, Long price, String size) {
-        Shoes shoes = shoesRepository.findById(shoesId).orElseThrow(() -> new IllegalArgumentException("shoes not found"));
-        List<Order> matchList = orderRepository.findAllByTradingRoleAndShoesAndShoesSizeAndPriceOrderByCreatedAtDesc(SELLER, shoes, size, price);
+        List<Order> matchList = orderRepository.findAllByTradingRoleAndShoesAndShoesSizeAndPriceOrderByCreatedAtDesc(SELLER, shoesId, size, price);
 
         EndUpOrder endUpOrder = EndUpOrder.createEndUpOrder(
                 shoesRepository.findById(shoesId).orElseThrow(() -> new IllegalArgumentException("id not found")),
@@ -121,7 +118,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Long sellOrdermatch(Long shoesId, Long userId, String size , Long price) {
         Shoes shoes = shoesRepository.findById(shoesId).orElseThrow(() -> new IllegalArgumentException("shoes not found"));
-        List<Order> matchList = orderRepository.findAllByTradingRoleAndShoesAndShoesSizeAndPriceOrderByCreatedAtDesc(BUYER, shoes, size, price);
+        List<Order> matchList = orderRepository.findAllByTradingRoleAndShoesAndShoesSizeAndPriceOrderByCreatedAtDesc(BUYER, shoesId, size, price);
 
         EndUpOrder endUpOrder = EndUpOrder.createEndUpOrder(
                 shoesRepository.findById(shoesId).orElseThrow(() -> new IllegalArgumentException("id not found")),
@@ -139,28 +136,27 @@ public class OrderServiceImpl implements OrderService {
 
     // 사이즈별 매물 가격 조회
     public SizePriceResponseDto getSizePrice(Long shoesId) {
-        Shoes shoesFound = shoesRepository.findById(shoesId).orElseThrow(() -> new IllegalArgumentException("shoes not found"));
-        SizePrice sizePrice = findPriceFromDB(shoesFound);
+//        Shoes shoesFound = shoesRepository.findById(shoesId).orElseThrow(() -> new IllegalArgumentException("shoes not found"));
+        SizePrice sizePrice = findPriceFromDB(shoesId);
         return new SizePriceResponseDto(sizePrice, 200L, "모든 사이즈 즉시 구매가 조회 성공");
     }
 
     // 사이즈별 매물 가격 조회 편의 메서드
-    private SizePrice findPriceFromDB(Shoes shoesFound) {
-        SizePrice sizePrice = new SizePrice(
-                priceCheck("230", shoesFound),
-                priceCheck("240", shoesFound),
-                priceCheck("250", shoesFound),
-                priceCheck("260", shoesFound),
-                priceCheck("270", shoesFound),
-                priceCheck("280", shoesFound)
-        );
-        return sizePrice;
+    private SizePrice findPriceFromDB(Long shoesFound) {
+        List<SizeEachPrice> sizeEachPriceList = new ArrayList<>();
+        sizeEachPriceList.add(new SizeEachPrice("230", priceCheck("230", shoesFound)));
+        sizeEachPriceList.add(new SizeEachPrice("240", priceCheck("240", shoesFound)));
+        sizeEachPriceList.add(new SizeEachPrice("250", priceCheck("250", shoesFound)));
+        sizeEachPriceList.add(new SizeEachPrice("260", priceCheck("260", shoesFound)));
+        sizeEachPriceList.add(new SizeEachPrice("270", priceCheck("270", shoesFound)));
+        sizeEachPriceList.add(new SizeEachPrice("280", priceCheck("280", shoesFound)));
+        return new SizePrice(sizeEachPriceList);
     }
 
     // 사이즈별 매물 가격 조회 편의 메서드
-    private String priceCheck(String size, Shoes shoesFound) {
+    private String priceCheck(String size, Long shoesId) {
         DecimalFormat decFormat = new DecimalFormat("###,###");
-        List<Order> searchedOrder = orderRepository.findAllByTradingRoleAndShoesAndShoesSizeOrderByPriceDesc(SELLER, shoesFound, size);
+        List<Order> searchedOrder = orderRepository.findAllByTradingRoleAndShoesAndShoesSizeOrderByPriceDesc(SELLER, shoesId, size);
         if (searchedOrder == null) {
             return "구매 입찰";
         }
@@ -171,11 +167,11 @@ public class OrderServiceImpl implements OrderService {
     public SingleSizeResponseDto getSinglePrice(Long shoesId, String shoesSize) {
         DecimalFormat decFormat = new DecimalFormat("###,###");
         SingleSizeResponseDto singleSizeResponseDto = new SingleSizeResponseDto();
-        Shoes shoes = shoesRepository.findById(shoesId).orElseThrow(() -> new IllegalArgumentException("shoes not found"));
+//        Shoes shoes = shoesRepository.findById(shoesId).orElseThrow(() -> new IllegalArgumentException("shoes not found"));
 
 
         //최근 거래 가격 세팅
-        List<EndUpOrder> endUpOrderByShoes = endUpOrderRepository.findAllByShoesAndOrderByMatchingPriceDesc(shoes);
+        List<EndUpOrder> endUpOrderByShoes = endUpOrderRepository.findAllByShoesOrderByMatchingPriceDesc(shoesId);
         if (endUpOrderByShoes == null) {
             singleSizeResponseDto.setPriceRecent("null");
             singleSizeResponseDto.setMsg("최근 거래내역 없음");
@@ -185,7 +181,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         // 판매 가격 세팅
-        List<Order> buyList = orderRepository.findAllByTradingRoleAndShoesAndShoesSizeOrderByPriceDesc(BUYER, shoes, shoesSize);
+        List<Order> buyList = orderRepository.findAllByTradingRoleAndShoesAndShoesSizeOrderByPriceDesc(BUYER, shoesId, shoesSize);
         if (buyList == null) {
             singleSizeResponseDto.setPriceSell("판매 입찰");
         } else {
@@ -193,7 +189,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         // 구매 가격 세팅
-        List<Order> sellList = orderRepository.findAllByTradingRoleAndShoesAndShoesSizeOrderByPriceDesc(SELLER, shoes, shoesSize);
+        List<Order> sellList = orderRepository.findAllByTradingRoleAndShoesAndShoesSizeOrderByPriceDesc(SELLER, shoesId, shoesSize);
         if (sellList == null) {
             singleSizeResponseDto.setPriceBuy("구매 입찰");
         } else {
@@ -208,7 +204,7 @@ public class OrderServiceImpl implements OrderService {
             singleSizeResponseDto.setMsg("단일 사이즈 가격 조회 성공");
             return singleSizeResponseDto;
         }
-        
+
     }
 
 

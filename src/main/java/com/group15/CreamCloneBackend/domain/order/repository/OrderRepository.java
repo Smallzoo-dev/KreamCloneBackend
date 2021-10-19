@@ -11,9 +11,9 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    List<Order> findAllByTradingRoleAndShoesAndShoesSizeAndPriceOrderByCreatedAtDesc(TradingRole tradingRole, Shoes shoes,String shoesSize, Long price);
+    List<Order> findAllByTradingRoleAndShoesAndShoesSizeAndPriceOrderByCreatedAtDesc(TradingRole tradingRole, Long shoesId,String shoesSize, Long price);
 
-    List<Order> findAllByTradingRoleAndShoesAndShoesSizeOrderByPriceDesc(TradingRole tradingRole, Shoes shoes, String shoesSize);
+    List<Order> findAllByTradingRoleAndShoesAndShoesSizeOrderByPriceDesc(TradingRole tradingRole, Long shoesId, String shoesSize);
 
 
 
