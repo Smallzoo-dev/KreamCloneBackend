@@ -3,11 +3,12 @@ package com.group15.CreamCloneBackend.domain.order.service;
 import com.group15.CreamCloneBackend.domain.order.Order;
 import com.group15.CreamCloneBackend.domain.order.TradeType;
 import com.group15.CreamCloneBackend.domain.order.TradingRole;
+import com.group15.CreamCloneBackend.domain.order.dto.OrderResponseDto;
 
 public interface OrderService {
 
 
-    public Long order(Long memberId, Long shoesId, TradingRole tradingRole, TradeType tradeType, String shoeSize, Long price);
+    public OrderResponseDto order(Long memberId, Long shoesId, TradingRole tradingRole, TradeType tradeType, String shoeSize, Long price);
 
     public Long buyOrdercreate(Long memberId, Long shoesId, TradingRole tradingRole, String shoesSize, Long price);
 

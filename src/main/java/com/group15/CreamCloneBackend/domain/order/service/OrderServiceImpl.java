@@ -5,6 +5,7 @@ import com.group15.CreamCloneBackend.domain.enduporder.repository.EndUpOrderRepo
 import com.group15.CreamCloneBackend.domain.order.Order;
 import com.group15.CreamCloneBackend.domain.order.TradeType;
 import com.group15.CreamCloneBackend.domain.order.TradingRole;
+import com.group15.CreamCloneBackend.domain.order.dto.OrderResponseDto;
 import com.group15.CreamCloneBackend.domain.order.repository.OrderRepository;
 import com.group15.CreamCloneBackend.domain.product.repository.ShoesRepository;
 import com.group15.CreamCloneBackend.domain.user.UserRepository;
@@ -54,22 +55,22 @@ public class OrderServiceImpl implements OrderService {
 
     //분기용 메서드
     @Override
-    public Long order(Long userId, Long shoesId, TradingRole tradingRole, TradeType tradeType, String shoeSize, Long price) {
+    public OrderResponseDto order(Long userId, Long shoesId, TradingRole tradingRole, TradeType tradeType, String shoeSize, Long price) {
         if (tradeType.equals(Bidding)) {
             if (tradingRole.equals(BUYER)) {
                 Long orderId = buyOrdercreate(userId, shoesId, tradingRole, shoeSize, price);
-                return orderId;
+                return new OrderResponseDto(200L, "희망 구매 가격으로 거래 입찰이 생성되었습니다.");
             } else {
                 Long endUpOrderId = buyOrdermatch(shoesId, userId, price);
-                return endUpOrderId;
+                return new OrderResponseDto(200L, "즉시 구매가로 거래가 완료되었습니다.");
             }
-        } else {
+        } else if (tradeType.equals(Match)){
             if (tradingRole.equals(BUYER)) {
                 Long orderId = sellOrdercreate(userId, shoesId, tradingRole, shoeSize, price);
-                return orderId;
+                return new OrderResponseDto(200L, "희망 판매 가격으로 거래 입찰이 생성되었습니다.");
             } else {
                 Long endUpOrderId = sellOrdermatch(shoesId, userId, price);
-                return endUpOrderId;
+                return new OrderResponseDto(200L, "즉시 구매가로 거래가 완료되었습니다.");;
             }
 
         }
