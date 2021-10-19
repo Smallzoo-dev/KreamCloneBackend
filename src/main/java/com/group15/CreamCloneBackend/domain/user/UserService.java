@@ -4,6 +4,7 @@ import com.group15.CreamCloneBackend.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -15,36 +16,37 @@ public class UserService {
     private final JwtTokenProvider jwtTokenProvider;
 
     //회원가입
-    public UserResponseDto usersignup(UserRequestDto userRequestDto){
+    public UserResponseDto usersignup(UserRequestDto userRequestDto) {
 
         String encodingPw = passwordEncoder.encode(userRequestDto.getPassword());
-        User user = new User(userRequestDto.getUsername(),encodingPw);
+        User user = new User(userRequestDto.getUsername(), encodingPw);
 
         userRepository.save(user);
 
-        return new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(),ResponseMsg.MSG_SUCCESS_SIGNUP.getMsg());
+        return new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(), ResponseMsg.MSG_SUCCESS_SIGNUP.getMsg());
 
     }
 
     //로그인
-    public UserResponseDto userlogin(UserRequestDto userRequestDto){
+    public UserResponseDto userlogin(UserRequestDto userRequestDto) {
+        UserResponseDto responseDto;
 
-        Optional<User> user = userRepository.findByUsername(userRequestDto.getUsername());
+        User user = userRepository.findByUsername(userRequestDto.getUsername());
 
-        if (!user.isPresent()){
+        if (user==null) {
+            responseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(), ResponseMsg.MSG_FAILE_LOGIN_USERNAME.getMsg());
+        } else if (!passwordEncoder.matches(userRequestDto.getPassword(), user.getPassword())) {
+            System.out.println(passwordEncoder.matches(userRequestDto.getPassword(), user.getPassword()));
 
-            return new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(),ResponseMsg.MSG_FAILE_LOGIN_USERNAME.getMsg());
+            responseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(), ResponseMsg.MSG_FAILE_LOGIN_PASSWORD.getMsg());
 
-        }else if (!user.get().getPassword().equals(userRequestDto.getPassword())){
+        } else {
+            //로그인 성공 시
+            String token = jwtTokenProvider.createToken(userRequestDto.getUsername());
 
-            return new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(),ResponseMsg.MSG_FAILE_LOGIN_PASSWORD.getMsg());
-
+            responseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(), ResponseMsg.MSG_SUCCESS_LOGIN.getMsg(), token);
         }
-        //로그인 성공 시
-        String token = jwtTokenProvider.createToken(userRequestDto.getUsername());
-
-        return new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(),ResponseMsg.MSG_SUCCESS_LOGIN.getMsg(),token);
-
+        return responseDto;
     }
 
 
