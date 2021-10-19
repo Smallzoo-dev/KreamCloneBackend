@@ -1,7 +1,7 @@
 package com.group15.CreamCloneBackend.domain.user;
 
 import com.group15.CreamCloneBackend.domain.product.Shoes;
-import com.group15.CreamCloneBackend.domain.product.ShoesRepository;
+import com.group15.CreamCloneBackend.domain.product.repository.ShoesRepository;
 import com.group15.CreamCloneBackend.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
