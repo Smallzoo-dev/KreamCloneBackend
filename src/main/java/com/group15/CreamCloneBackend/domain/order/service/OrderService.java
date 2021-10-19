@@ -12,9 +12,9 @@ public interface OrderService {
 
     public Long buyOrdercreate(Long memberId, Long shoesId, TradingRole tradingRole, String shoesSize, Long price);
 
-    public Long buyOrdermatch(Long shoesId, Long userId, Long price);
+    public Long buyOrdermatch(Long shoesId, Long userId, Long price, String size);
 
     public Long sellOrdercreate(Long memberId, Long shoesId, TradingRole tradingRole, String shoesSize, Long price);
 
-    public Long sellOrdermatch(Long shoesId, Long userId, Long price);
+    public Long sellOrdermatch(Long shoesId, Long userId, String size , Long price);
 }
