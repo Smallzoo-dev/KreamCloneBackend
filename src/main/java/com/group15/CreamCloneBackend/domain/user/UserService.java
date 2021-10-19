@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -56,6 +57,7 @@ public class UserService {
     }
 
     //북마크
+    @Transactional
     public UserResponseDto bookmark(User user, Long productId){
 
         UserResponseDto userResponseDto;
@@ -68,20 +70,19 @@ public class UserService {
             userResponseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(),ResponseMsg.MSG_NOFOUND_SHOES.getMsg() );
 
         }else {
-            Shoes shoes1 = shoes.get();
 
             if (findUser==null){ //북마크가 되어있지 않을 때 북마크 추가
-
+                shoes.get().setBookmarkCnt(shoes.get().getBookmarkCnt()+1L);
+                Shoes shoes1 = shoes.get();
                 UserShoes userShoes = new UserShoes(user,shoes1);
                 userShoesRepository.save(userShoes);
                 userResponseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(), ResponseMsg.MSG_FAILE_SIGNUP.getMsg());
             }
 
             else { //북마크가 되어있을 때 북마크 삭제
-
+                shoes.get().setBookmarkCnt(shoes.get().getBookmarkCnt()-1L);
                 userShoesRepository.delete(findUser);
                 userResponseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(),ResponseMsg.MSG_FAILE_BOOKMARK.getMsg() );
-
             }
             return userResponseDto;
         }
