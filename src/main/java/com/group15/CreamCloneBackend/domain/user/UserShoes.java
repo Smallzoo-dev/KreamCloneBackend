@@ -1,6 +1,7 @@
 package com.group15.CreamCloneBackend.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import com.group15.CreamCloneBackend.domain.product.Shoes;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
