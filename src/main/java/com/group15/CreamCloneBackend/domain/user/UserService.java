@@ -62,32 +62,30 @@ public class UserService {
 
         UserShoes findUser = userShoesRepository.findByUser(user);
         Optional<Shoes> shoes = shoesRepository.findById(productId);
+        //신발 정보가 존재하는지 체크
         if (!shoes.isPresent()){
+
             userResponseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(),ResponseMsg.MSG_NOFOUND_SHOES.getMsg() );
 
         }else {
             Shoes shoes1 = shoes.get();
-            //북마크가 되어있지 않을 때 북마크 추가
-            if (findUser==null){
+
+            if (findUser==null){ //북마크가 되어있지 않을 때 북마크 추가
 
                 UserShoes userShoes = new UserShoes(user,shoes1);
                 userShoesRepository.save(userShoes);
                 userResponseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(), ResponseMsg.MSG_FAILE_SIGNUP.getMsg());
             }
-            //북마크가 되어있을 때 북마크 삭제
-            else {
+
+            else { //북마크가 되어있을 때 북마크 삭제
+
                 userShoesRepository.delete(findUser);
                 userResponseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(),ResponseMsg.MSG_FAILE_BOOKMARK.getMsg() );
 
             }
             return userResponseDto;
         }
-
-
-
         return userResponseDto;
-
     }
-
 }
 
