@@ -1,6 +1,10 @@
 package com.group15.CreamCloneBackend.controller;
 
-import com.group15.CreamCloneBackend.domain.user.*;
+import com.group15.CreamCloneBackend.domain.user.Enum.ResponseMsg;
+import com.group15.CreamCloneBackend.domain.user.Enum.StatusCode;
+import com.group15.CreamCloneBackend.domain.user.dto.UserRequestDto;
+import com.group15.CreamCloneBackend.domain.user.dto.UserResponseDto;
+import com.group15.CreamCloneBackend.domain.user.service.UserService;
 import com.group15.CreamCloneBackend.security.UserDetailsImpl;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -9,8 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -39,7 +41,7 @@ public class UserRestController {
     @GetMapping("/user/logincheck")
     public UserResponseDto userLoginCheck(@AuthenticationPrincipal UserDetailsImpl userDetails){
         if (userDetails==null){
-            return new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(),ResponseMsg.MSG_IS_ANONYMOUS.getMsg());
+            return new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(), ResponseMsg.MSG_IS_ANONYMOUS.getMsg());
         }
         return new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(),ResponseMsg.MSG_IS_USER.getMsg());
 
@@ -48,7 +50,7 @@ public class UserRestController {
 
     //북마크
     @ApiOperation(value = "북마크",notes = "북마크 여부 리턴- 북마크 성공:200 해제:500")
-    @PostMapping("/user/login")
+    @PostMapping("/user/bookmark")
     public UserResponseDto bookmark(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                     @RequestBody Long productId ){
         return userService.bookmark(userDetails.getUser(),productId);
