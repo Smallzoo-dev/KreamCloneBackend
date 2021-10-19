@@ -22,27 +22,11 @@ public class Shoes {
 
     private String brand;
 
-    private String modelName;
-
-    private String releaseDate;
-
-    private String priceOriginal;
+    private Long priceOriginal;
 
     private String modelNumber;
 
-    private String image;
-
-    private Long bookmarkCnt;
-
-    public Shoes(ProductDto productDto){
-        this.bookmarkCnt = 0L;
-        this.image = productDto.getImage();
-        this.brand = productDto.getBrand();
-        this.modelNumber = productDto.getModelNumber();
-        this.modelName = productDto.getModelName();
-        this.priceOriginal = productDto.getPriceOriginal();
-        this.releaseDate = productDto.getReleaseDate();
-    }
+    private Long bookmarkCnt=0L;
 
     @JsonIgnore
     @OneToMany(mappedBy = "shoes")

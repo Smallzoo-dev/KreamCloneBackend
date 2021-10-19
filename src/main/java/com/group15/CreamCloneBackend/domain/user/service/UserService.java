@@ -23,9 +23,11 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+
     private final JwtTokenProvider jwtTokenProvider;
     private final UserShoesRepository userShoesRepository;
     private final ShoesRepository shoesRepository;
+
 
 
     //회원가입
@@ -60,12 +62,19 @@ public class UserService {
 
             responseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(), ResponseMsg.MSG_SUCCESS_LOGIN.getMsg(), token);
         }
-        return responseDto;
+
+
+        //로그인 성공 시
+        String token = jwtTokenProvider.createToken(userRequestDto.getUsername());
+
+
+        return new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(),ResponseMsg.MSG_SUCCESS_LOGIN.getMsg(),token);
     }
 
     //북마크
     @Transactional
     public UserResponseDto bookmark(User user, Long productId){
+
 
         UserResponseDto userResponseDto;
 
