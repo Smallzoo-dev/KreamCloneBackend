@@ -22,13 +22,15 @@ public class Shoes {
     @GeneratedValue
     private Long id;
 
-    private String brandName;
+    private String brand;
 
     private String ImgUrl;
 
-    private Long officialPrice;
+    private Long priceOriginal;
 
-    private String modelNum;
+    private String modelNumber;
+
+    private Long bookmarkCnt=0L;
 
 
     @JsonIgnore
