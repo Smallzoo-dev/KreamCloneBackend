@@ -62,13 +62,7 @@ public class UserService {
 
             responseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(), ResponseMsg.MSG_SUCCESS_LOGIN.getMsg(), token);
         }
-
-
-        //로그인 성공 시
-        String token = jwtTokenProvider.createToken(userRequestDto.getUsername());
-
-
-        return new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(),ResponseMsg.MSG_SUCCESS_LOGIN.getMsg(),token);
+        return responseDto;
     }
 
     //북마크
@@ -92,13 +86,14 @@ public class UserService {
                 Shoes shoes1 = shoes.get();
                 UserShoes userShoes = new UserShoes(user,shoes1);
                 userShoesRepository.save(userShoes);
-                userResponseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(), ResponseMsg.MSG_FAILE_SIGNUP.getMsg());
+                userResponseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(), ResponseMsg.MSG_FAILE_SIGNUP.getMsg(),shoes1.getBookmarkCnt());
             }
 
             else { //북마크가 되어있을 때 북마크 삭제
                 shoes.get().setBookmarkCnt(shoes.get().getBookmarkCnt()-1L);
+                Shoes shoes1 = shoes.get();
                 userShoesRepository.delete(findUser);
-                userResponseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(),ResponseMsg.MSG_FAILE_BOOKMARK.getMsg() );
+                userResponseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(),ResponseMsg.MSG_FAILE_BOOKMARK.getMsg(),shoes1.getBookmarkCnt() );
             }
 
         }
