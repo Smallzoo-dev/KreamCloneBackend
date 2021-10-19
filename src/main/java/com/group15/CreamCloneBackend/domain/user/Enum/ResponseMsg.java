@@ -1,4 +1,4 @@
-package com.group15.CreamCloneBackend.domain.user;
+package com.group15.CreamCloneBackend.domain.user.Enum;
 
 import lombok.Getter;
 
