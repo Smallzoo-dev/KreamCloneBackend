@@ -2,6 +2,7 @@ package com.group15.CreamCloneBackend.domain.product.controller;
 
 import com.group15.CreamCloneBackend.domain.product.Shoes;
 import com.group15.CreamCloneBackend.domain.product.dto.MainDto;
+import com.group15.CreamCloneBackend.domain.product.dto.MainReponseDto;
 import com.group15.CreamCloneBackend.domain.product.dto.ShoesDto;
 import com.group15.CreamCloneBackend.domain.product.service.ShoesService;
 import io.swagger.annotations.ApiOperation;
@@ -19,11 +20,13 @@ public class ShoesController {
 
     private final ShoesService shoesService;
 
-//    @GetMapping("/")
-//    public MainDto getList(){
-//
-//        return shoesService.getList();
-//    }
+    @GetMapping("/")
+    public MainReponseDto getList(){
+
+        MainReponseDto mainReponseDto = new MainReponseDto(shoesService.getList(), 200L, "메인 페이지 로딩 성공");
+
+        return mainReponseDto;
+    }
 
     @ApiOperation(value = "상세페이지",notes = "상태 코드값, 메시지")
     @GetMapping("/product/{productId}")
@@ -31,9 +34,9 @@ public class ShoesController {
 
         return shoesService.showDto(productId);
     }
-    @PostMapping("/test")
-    public Shoes createTest(){
-
-        return shoesService.createTest();
-    }
+//    @PostMapping("/test")
+//    public Shoes createTest(){
+//
+//        return shoesService.createTest();
+//    }
 }

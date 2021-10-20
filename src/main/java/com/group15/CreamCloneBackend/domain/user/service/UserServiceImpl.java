@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
 
         Optional<Shoes> shoes = shoesRepository.findById(productId);
         //신발 정보가 존재하는지 체크
-        if (shoes.isEmpty()){
+        if (!shoes.isPresent()){
 
             userResponseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(),ResponseMsg.MSG_NOFOUND_SHOES.getMsg() );
 
