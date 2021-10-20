@@ -1,9 +1,13 @@
 package com.group15.CreamCloneBackend.controller;
 
+import com.group15.CreamCloneBackend.domain.product.Shoes;
 import com.group15.CreamCloneBackend.domain.user.Enum.ResponseMsg;
 import com.group15.CreamCloneBackend.domain.user.Enum.StatusCode;
+import com.group15.CreamCloneBackend.domain.user.dto.BookmarkListDto;
+import com.group15.CreamCloneBackend.domain.user.dto.OrderListDto;
 import com.group15.CreamCloneBackend.domain.user.dto.UserRequestDto;
 import com.group15.CreamCloneBackend.domain.user.dto.UserResponseDto;
+import com.group15.CreamCloneBackend.domain.user.service.MypageServiceImpl;
 import com.group15.CreamCloneBackend.domain.user.service.UserServiceImpl;
 import com.group15.CreamCloneBackend.security.UserDetailsImpl;
 import io.swagger.annotations.ApiOperation;
@@ -14,10 +18,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 public class UserRestController {
     private final UserServiceImpl userService;
+    private final MypageServiceImpl mypageService;
+
 
     //회원가입
     @ApiOperation(value = "회원가입",notes = "회원가입")
@@ -57,4 +65,19 @@ public class UserRestController {
     }
 
 
+    //마이페이지
+    @ApiOperation(value = "마이페이지",notes = "구매목록, 판매목록, 북마크리스트, 상태코드")
+    @GetMapping("/mypage")
+    public BookmarkListDto getMypage(@AuthenticationPrincipal UserDetailsImpl userDetails){
+
+        // 구매목록, 판매목록 담기
+        OrderListDto OrderListDto = mypageService.getBuyAndSellList();
+
+        List<Shoes> likeShoesList = userService.getBookmarkList(userDetails.getUser());
+
+        UserResponseDto responseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(),
+               ResponseMsg.MSG_LOAD_SUCCESS_MYPAGE.getMsg() );
+
+         return new BookmarkListDto(OrderListDto,likeShoesList,responseDto);
+    }
 }

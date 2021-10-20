@@ -9,6 +9,7 @@ public class UserResponseDto {
     private final String responseMsg;
     private String token;
     private Long bookmarkCnt;
+    private Object object;
 
     public UserResponseDto(String statusCode, String msg) {
         this.statusCode=statusCode;
@@ -26,6 +27,13 @@ public class UserResponseDto {
         this.statusCode=statusCode;
         this.responseMsg=msg;
         this.bookmarkCnt=bookmarkCnt;
+    }
+
+    //상세페이지 북마크
+    public UserResponseDto(String statusCode, String msg, OrderListDto mypageResponseDto) {
+        this.statusCode=statusCode;
+        this.responseMsg=msg;
+        this.object = mypageResponseDto;
     }
 
 }

@@ -3,6 +3,7 @@ package com.group15.CreamCloneBackend.domain.product;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.group15.CreamCloneBackend.domain.enduporder.EndUpOrder;
 import com.group15.CreamCloneBackend.domain.order.Order;
+import com.group15.CreamCloneBackend.domain.product.dto.ProductDto;
 import com.group15.CreamCloneBackend.domain.user.UserShoes;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

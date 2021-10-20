@@ -14,7 +14,8 @@ public enum ResponseMsg {
     MSG_IS_ANONYMOUS("회원이 아닙니다"),
     MSG_SUCCESS_BOOKMARK("북마크 추가 성공"),
     MSG_SUCCESS_DEL_BOOKMARK("북마크 삭제 성공"),
-    MSG_NOFOUND_SHOES("해당 신발을 찾을 수 없습니다");
+    MSG_NOFOUND_SHOES("해당 신발을 찾을 수 없습니다"),
+    MSG_LOAD_SUCCESS_MYPAGE("마이페이지 로딩 성공");
 
     private String msg;
 

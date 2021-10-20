@@ -1,5 +1,7 @@
-package com.group15.CreamCloneBackend.domain.product;
+package com.group15.CreamCloneBackend.domain.product.service;
 
+import com.group15.CreamCloneBackend.domain.product.Shoes;
+import com.group15.CreamCloneBackend.domain.product.dto.ProductDto;
 import com.group15.CreamCloneBackend.domain.product.repository.ShoesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

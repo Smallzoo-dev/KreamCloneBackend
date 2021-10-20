@@ -3,12 +3,12 @@ package com.group15.CreamCloneBackend.controller;
 import com.group15.CreamCloneBackend.domain.order.dto.SingleSizeResponseDto;
 import com.group15.CreamCloneBackend.domain.order.dto.SizePriceResponseDto;
 import com.group15.CreamCloneBackend.domain.order.service.OrderService;
-import com.group15.CreamCloneBackend.security.UserDetailsImpl;
 import io.swagger.annotations.ApiOperation;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController

@@ -1,7 +1,7 @@
 package com.group15.CreamCloneBackend.controller;
 
-import com.group15.CreamCloneBackend.domain.product.ProductDto;
-import com.group15.CreamCloneBackend.domain.product.ProductService;
+import com.group15.CreamCloneBackend.domain.product.dto.ProductDto;
+import com.group15.CreamCloneBackend.domain.product.service.ProductService;
 import com.group15.CreamCloneBackend.domain.product.repository.ShoesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +15,6 @@ public class SetUpSheosRestController {
 
     private final ProductService productService;
     private final ShoesRepository shoesRepository;
-
 
 
     @PostMapping("/product/sheosDataSetup")

@@ -5,6 +5,7 @@ import com.group15.CreamCloneBackend.domain.product.repository.ShoesRepository;
 import com.group15.CreamCloneBackend.domain.user.*;
 import com.group15.CreamCloneBackend.domain.user.Enum.ResponseMsg;
 import com.group15.CreamCloneBackend.domain.user.Enum.StatusCode;
+import com.group15.CreamCloneBackend.domain.user.dto.BookmarkListDto;
 import com.group15.CreamCloneBackend.domain.user.dto.UserRequestDto;
 import com.group15.CreamCloneBackend.domain.user.dto.UserResponseDto;
 import com.group15.CreamCloneBackend.domain.user.repository.UserRepository;
@@ -15,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -99,5 +102,20 @@ public class UserServiceImpl implements UserService {
         }
         return userResponseDto;
     }
+
+
+    //북마크 리스트 가져오기
+    public List<Shoes> getBookmarkList(User user){
+
+        List<UserShoes> userShoesList = userShoesRepository.findAllByUser(user);
+        List<Shoes> shoesList = new ArrayList<>();
+
+        for (UserShoes userShoes : userShoesList) {
+            shoesList.add(userShoes.getShoes());
+        }
+        return shoesList;
+
+    }
 }
+
 
