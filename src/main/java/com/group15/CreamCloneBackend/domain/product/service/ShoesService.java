@@ -6,6 +6,7 @@ import com.group15.CreamCloneBackend.domain.product.dto.ShoesDto;
 import com.group15.CreamCloneBackend.domain.product.repository.ShoesRepository;
 import com.group15.CreamCloneBackend.domain.user.User;
 import com.group15.CreamCloneBackend.domain.user.UserShoes;
+import com.group15.CreamCloneBackend.domain.user.repository.UserShoesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class ShoesService {
 
     private final ShoesRepository shoesRepository;
+    private final UserShoesRepository userShoesRepository;
 
     public Shoes showShoes(Long Id){
 
@@ -71,7 +73,7 @@ public class ShoesService {
     public List<MainDto> setPriceAndLike(User user, List<MainDto> productList) {
         List<Shoes> collect = shoesRepository.findAll().stream()
                 .filter(s -> s.getInTradeList().size() > 0).collect(Collectors.toList());
-        List<UserShoes> likedShoesList = user.getLikedShoesList();
+        List<UserShoes> likedShoesList = userShoesRepository.findAllByUser(user);
         Map<Long, MainDto> productListMap = productList.stream().collect(Collectors.toMap(
                 i1 -> i1.getId(),
                 i2 -> i2

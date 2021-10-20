@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
             Long lowprice = orderList.get(0).getPrice();
             shoes.setPrice(lowprice);
             shoesList.add(shoes);
-        }
+       }
         return shoesList;
 
     }

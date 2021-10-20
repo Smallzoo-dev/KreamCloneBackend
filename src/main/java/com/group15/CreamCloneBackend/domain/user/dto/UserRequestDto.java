@@ -1,6 +1,8 @@
 package com.group15.CreamCloneBackend.domain.user.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Getter
 public class UserRequestDto {

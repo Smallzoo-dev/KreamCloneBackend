@@ -9,10 +9,7 @@ import com.group15.CreamCloneBackend.security.UserDetailsImpl;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,7 +17,7 @@ public class OrderRestController {
     private final OrderService orderService;
 
     @ApiOperation(value = "거래 페이지", notes = "거래 성공, 실패여부 반환")
-    @GetMapping("/order/transaction/{productid}")
+    @PostMapping("/order/transaction/{productid}")
     public OrderResponseDto transaction(@PathVariable Long productid,
                                         @RequestBody OrderRequestDto orderRequestDto,
                                         @AuthenticationPrincipal UserDetailsImpl userDetails) {
