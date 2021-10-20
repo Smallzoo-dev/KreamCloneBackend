@@ -10,21 +10,22 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MainDto {
+    private Long id;
     private String brand;
     private String modelName;
     private String image;
-    private Boolean bookMark;
-    private Long price;
+    private Boolean bookMark = false;
+    private String price;
     private Long productId;
 
 
    public MainDto(Shoes shoes){
+        this.id = shoes.getId();
         this.brand = shoes.getBrand();
         this.modelName = shoes.getModelName();
         this.image = shoes.getImage();
-        this.bookMark = shoes.getBookMark();
-        this.price = shoes.getPrice();
         this.productId = shoes.getProductId();
+        this.price = shoes.getPriceOriginal();
     }
 }
 

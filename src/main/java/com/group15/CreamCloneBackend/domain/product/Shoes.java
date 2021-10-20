@@ -21,6 +21,7 @@ public class Shoes {
     @GeneratedValue
     private Long id;
 
+
     private String brand;
 
     private String image;
@@ -35,11 +36,8 @@ public class Shoes {
 
     private Long bookmarkCnt=0L;
 
-    private Long Price;
-
     private Long productId;
 
-    private Boolean bookMark;
 
     @JsonIgnore
     @OneToMany(mappedBy = "shoes",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
