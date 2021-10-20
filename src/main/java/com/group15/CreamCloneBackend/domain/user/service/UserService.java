@@ -1,8 +1,11 @@
 package com.group15.CreamCloneBackend.domain.user.service;
 
+import com.group15.CreamCloneBackend.domain.product.Shoes;
 import com.group15.CreamCloneBackend.domain.user.User;
 import com.group15.CreamCloneBackend.domain.user.dto.UserRequestDto;
 import com.group15.CreamCloneBackend.domain.user.dto.UserResponseDto;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -11,5 +14,7 @@ public interface UserService {
     UserResponseDto userlogin(UserRequestDto userRequestDto);
 
     UserResponseDto bookmark(User user, Long productId, Boolean bookmark);
+
+    List<Shoes> getBookmarkList(User user);
 
 }

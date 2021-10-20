@@ -1,5 +1,7 @@
 package com.group15.CreamCloneBackend.domain.user.service;
 
+import com.group15.CreamCloneBackend.domain.order.Order;
+import com.group15.CreamCloneBackend.domain.order.repository.OrderRepository;
 import com.group15.CreamCloneBackend.domain.product.Shoes;
 import com.group15.CreamCloneBackend.domain.product.repository.ShoesRepository;
 import com.group15.CreamCloneBackend.domain.user.*;
@@ -29,6 +31,7 @@ public class UserServiceImpl implements UserService {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserShoesRepository userShoesRepository;
     private final ShoesRepository shoesRepository;
+    private final OrderRepository orderRepository;
 
 
     //회원가입
@@ -111,7 +114,11 @@ public class UserServiceImpl implements UserService {
         List<Shoes> shoesList = new ArrayList<>();
 
         for (UserShoes userShoes : userShoesList) {
-            shoesList.add(userShoes.getShoes());
+            Shoes shoes =userShoes.getShoes();
+            List<Order> orderList = orderRepository.findAllByShoesOrderByCreatedAtDesc(shoes);
+            Long lowprice = orderList.get(0).getPrice();
+            shoes.setPrice(lowprice);
+            shoesList.add(shoes);
         }
         return shoesList;
 
