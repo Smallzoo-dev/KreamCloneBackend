@@ -71,7 +71,7 @@ public class UserRestController {
     public BookmarkListDto getMypage(@AuthenticationPrincipal UserDetailsImpl userDetails){
 
         // 구매목록, 판매목록 담기
-        OrderListDto OrderListDto = mypageService.getBuyAndSellList();
+        OrderListDto OrderListDto = mypageService.getBuyAndSellList(userDetails.getUser());
 
         List<Shoes> likeShoesList = userService.getBookmarkList(userDetails.getUser());
 

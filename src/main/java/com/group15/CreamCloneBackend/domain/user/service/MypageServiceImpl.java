@@ -3,6 +3,7 @@ package com.group15.CreamCloneBackend.domain.user.service;
 import com.group15.CreamCloneBackend.domain.order.Order;
 import com.group15.CreamCloneBackend.domain.order.TradingRole;
 import com.group15.CreamCloneBackend.domain.order.repository.OrderRepository;
+import com.group15.CreamCloneBackend.domain.user.User;
 import com.group15.CreamCloneBackend.domain.user.dto.OrderListDto;
 
 import lombok.RequiredArgsConstructor;
@@ -18,9 +19,9 @@ public class MypageServiceImpl implements MypageService{
     private final OrderRepository orderRepository;
 
 
-    public OrderListDto getBuyAndSellList() {
+    public OrderListDto getBuyAndSellList(User user) {
 
-        List<Order> allOrderList = orderRepository.findAll();
+        List<Order> allOrderList = orderRepository.findAllByUser(user);
         List<Order> buyOrderList=new ArrayList<>();
         List<Order> sellOrderList=new ArrayList<>();
 
@@ -31,7 +32,6 @@ public class MypageServiceImpl implements MypageService{
                 sellOrderList.add(order);
             }
         }
-
-        return new OrderListDto(buyOrderList,sellOrderList);
+        return new OrderListDto(buyOrderList, sellOrderList);
     }
 }

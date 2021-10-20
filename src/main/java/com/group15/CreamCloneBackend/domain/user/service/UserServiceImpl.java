@@ -3,6 +3,7 @@ package com.group15.CreamCloneBackend.domain.user.service;
 import com.group15.CreamCloneBackend.domain.order.Order;
 import com.group15.CreamCloneBackend.domain.order.repository.OrderRepository;
 import com.group15.CreamCloneBackend.domain.product.Shoes;
+import com.group15.CreamCloneBackend.domain.product.dto.MainDto;
 import com.group15.CreamCloneBackend.domain.product.repository.ShoesRepository;
 import com.group15.CreamCloneBackend.domain.user.*;
 import com.group15.CreamCloneBackend.domain.user.Enum.ResponseMsg;
@@ -115,9 +116,6 @@ public class UserServiceImpl implements UserService {
 
         for (UserShoes userShoes : userShoesList) {
             Shoes shoes =userShoes.getShoes();
-            List<Order> orderList = orderRepository.findAllByShoesOrderByCreatedAtDesc(shoes);
-            Long lowprice = orderList.get(0).getPrice();
-            shoes.setPrice(lowprice);
             shoesList.add(shoes);
        }
         return shoesList;
