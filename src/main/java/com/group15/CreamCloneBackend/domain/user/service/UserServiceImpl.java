@@ -1,7 +1,14 @@
-package com.group15.CreamCloneBackend.domain.user;
+package com.group15.CreamCloneBackend.domain.user.service;
 
 import com.group15.CreamCloneBackend.domain.product.Shoes;
 import com.group15.CreamCloneBackend.domain.product.repository.ShoesRepository;
+import com.group15.CreamCloneBackend.domain.user.*;
+import com.group15.CreamCloneBackend.domain.user.Enum.ResponseMsg;
+import com.group15.CreamCloneBackend.domain.user.Enum.StatusCode;
+import com.group15.CreamCloneBackend.domain.user.dto.UserRequestDto;
+import com.group15.CreamCloneBackend.domain.user.dto.UserResponseDto;
+import com.group15.CreamCloneBackend.domain.user.repository.UserRepository;
+import com.group15.CreamCloneBackend.domain.user.repository.UserShoesRepository;
 import com.group15.CreamCloneBackend.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,7 +19,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class UserService {
+public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
@@ -58,33 +65,37 @@ public class UserService {
 
     //북마크
     @Transactional
-    public UserResponseDto bookmark(User user, Long productId){
+    public UserResponseDto bookmark(User user, Long productId, Boolean bookmark){
 
         UserResponseDto userResponseDto;
 
-        UserShoes findUser = userShoesRepository.findByUser(user);
         Optional<Shoes> shoes = shoesRepository.findById(productId);
         //신발 정보가 존재하는지 체크
-        if (!shoes.isPresent()){
+        if (shoes.isEmpty()){
 
             userResponseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(),ResponseMsg.MSG_NOFOUND_SHOES.getMsg() );
 
         }else {
 
-            if (findUser==null){ //북마크가 되어있지 않을 때 북마크 추가
+            if (!bookmark){ //북마크가 되어있지 않을 때 북마크 추가
                 shoes.get().setBookmarkCnt(shoes.get().getBookmarkCnt()+1L);
                 Shoes shoes1 = shoes.get();
                 UserShoes userShoes = new UserShoes(user,shoes1);
                 userShoesRepository.save(userShoes);
-                userResponseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(), ResponseMsg.MSG_FAILE_SIGNUP.getMsg());
+                userResponseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(),
+                        ResponseMsg.MSG_FAILE_SIGNUP.getMsg(),
+                        shoes1.getBookmarkCnt());
             }
 
             else { //북마크가 되어있을 때 북마크 삭제
                 shoes.get().setBookmarkCnt(shoes.get().getBookmarkCnt()-1L);
-                userShoesRepository.delete(findUser);
-                userResponseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(),ResponseMsg.MSG_FAILE_BOOKMARK.getMsg() );
+                Shoes shoes1 = shoes.get();
+                userShoesRepository.delete(userShoesRepository.findByUserAndShoes(user,shoes1));
+                userResponseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(),
+                        ResponseMsg.MSG_SUCCESS_DEL_BOOKMARK.getMsg(),
+                        shoes1.getBookmarkCnt());
             }
-            return userResponseDto;
+
         }
         return userResponseDto;
     }

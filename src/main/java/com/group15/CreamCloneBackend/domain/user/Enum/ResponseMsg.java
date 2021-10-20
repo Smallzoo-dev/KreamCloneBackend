@@ -1,4 +1,4 @@
-package com.group15.CreamCloneBackend.domain.user;
+package com.group15.CreamCloneBackend.domain.user.Enum;
 
 import lombok.Getter;
 
@@ -13,7 +13,7 @@ public enum ResponseMsg {
     MSG_IS_USER("회원입니다"),
     MSG_IS_ANONYMOUS("회원이 아닙니다"),
     MSG_SUCCESS_BOOKMARK("북마크 추가 성공"),
-    MSG_FAILE_BOOKMARK("북마크 추가 실패"),
+    MSG_SUCCESS_DEL_BOOKMARK("북마크 삭제 성공"),
     MSG_NOFOUND_SHOES("해당 신발을 찾을 수 없습니다");
 
     private String msg;

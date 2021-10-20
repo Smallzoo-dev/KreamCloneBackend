@@ -1,6 +1,10 @@
 package com.group15.CreamCloneBackend.controller;
 
-import com.group15.CreamCloneBackend.domain.user.*;
+import com.group15.CreamCloneBackend.domain.user.Enum.ResponseMsg;
+import com.group15.CreamCloneBackend.domain.user.Enum.StatusCode;
+import com.group15.CreamCloneBackend.domain.user.dto.UserRequestDto;
+import com.group15.CreamCloneBackend.domain.user.dto.UserResponseDto;
+import com.group15.CreamCloneBackend.domain.user.service.UserServiceImpl;
 import com.group15.CreamCloneBackend.security.UserDetailsImpl;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -10,12 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-
 @RequiredArgsConstructor
 @RestController
 public class UserRestController {
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     //회원가입
     @ApiOperation(value = "회원가입",notes = "회원가입")
@@ -26,7 +28,7 @@ public class UserRestController {
 
     }
 
-    //로그인
+
     @ApiOperation(value = "로그인",notes = "상태코드, 메시지, 토큰값")
     @PostMapping("/user/login")
     public UserResponseDto userLogin(@RequestBody UserRequestDto userRequestDto){
@@ -39,19 +41,18 @@ public class UserRestController {
     @GetMapping("/user/logincheck")
     public UserResponseDto userLoginCheck(@AuthenticationPrincipal UserDetailsImpl userDetails){
         if (userDetails==null){
-            return new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(),ResponseMsg.MSG_IS_ANONYMOUS.getMsg());
+            return new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(), ResponseMsg.MSG_IS_ANONYMOUS.getMsg());
         }
         return new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(),ResponseMsg.MSG_IS_USER.getMsg());
-
     }
 
 
     //북마크
-    @ApiOperation(value = "북마크",notes = "북마크 여부 리턴- 북마크 성공:200 해제:500")
+    @ApiOperation(value = "북마크",notes = "북마크 변경 성공 여부 리턴- 북마크 변경 성공:200 실패:500")
     @PostMapping("/user/bookmark")
     public UserResponseDto bookmark(@AuthenticationPrincipal UserDetailsImpl userDetails,
-                                    @RequestBody Long productId ){
-        return userService.bookmark(userDetails.getUser(),productId);
+                                    @RequestBody Long productId,@RequestBody Boolean bookmark ){
+        return userService.bookmark(userDetails.getUser(),productId,bookmark);
 
     }
 
