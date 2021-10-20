@@ -13,7 +13,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class MypageServiceImpl {
+public class MypageServiceImpl implements MypageService{
 
     private final OrderRepository orderRepository;
 
