@@ -15,22 +15,16 @@ public class MainDto {
     private String image;
     private Boolean bookMark;
     private Long price;
+    private Long productId;
 
 
-    MainDto(Shoes shoes){
+   public MainDto(Shoes shoes){
         this.brand = shoes.getBrand();
         this.modelName = shoes.getModelName();
         this.image = shoes.getImage();
-        this.bookMark = shoes.getBookmark();
+        this.bookMark = shoes.getBookMark();
         this.price = shoes.getPrice();
+        this.productId = shoes.getProductId();
     }
 }
-//    public Shoes(ProductDto productDto){
-//        this.bookmarkCnt = 0L;
-//        this.image = productDto.getImage();
-//        this.brand = productDto.getBrand();
-//        this.modelNumber = productDto.getModelNumber();
-//        this.modelName = productDto.getModelName();
-//        this.priceOriginal = productDto.getPriceOriginal();
-//        this.releaseDate = productDto.getReleaseDate();
-//    }
+

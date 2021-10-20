@@ -35,21 +35,27 @@ public class ShoesService {
         return shoesDto;
 
     }
-    public Shoes createTest() {
-
-        Shoes shoes = new Shoes("123","123","123");
-        shoesRepository.save(shoes);
-
-        return null;
-    }
-
-//    public MainDto getList() {
-//        List<MainDto> dtos = new ArrayList<MainDto>();
-//        for(int i = 0; dtos; i++){
-//            MainDto dto = new MainDto();
-//            dto.getBrand();
-//        }
-//        return shoesRepository.findAll();
+//    public Shoes createTest() {
+//
+//        Shoes shoes = new Shoes("123","123","123");
+//        shoesRepository.save(shoes);
+//
+//        return null;
 //    }
+    /**
+     * 메인페이지에 북마크 true , false 여부 체크
+     * userDto에서
+     * likedShoesList 체크 ? 유저정보를 확인해서 북마크 반환
+     *
+     * 전체신발 리스트에서 신발 하나의 리스트를 가져와서 해당 신발의 북마크여부 확인 후 boolean 형과 비교..?     */
+
+    public List<MainDto> getList() {
+        List<MainDto> dtos = new ArrayList<MainDto>();
+        List<Shoes> showMain = shoesRepository.findAll();
+        for (Shoes shoe : showMain) {
+            dtos.add(new MainDto(shoe));
+        }
+        return dtos;
+    }
 }
 
