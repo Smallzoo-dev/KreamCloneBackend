@@ -34,19 +34,17 @@ public class Order extends TimeStamped{
     private Long price;
 
 
-    /**
-     * 연관관계 편의 메서드
-     */
 
-    public void setUser(User user) {
-        this.user = user;
-        user.getJoinedOrderList().add(this);
-    }
 
-    public void setShoes(Shoes shoes) {
-        this.shoes = shoes;
-        shoes.getInTradeList().add(this);
-    }
+//    public void setUser(User user) {
+//        this.user = user;
+//        user.getJoinedOrderList().add(this);
+//    }
+//
+//    public void setShoes(Shoes shoes) {
+//        this.shoes = shoes;
+//        shoes.getInTradeList().add(this);
+//    }
 
     public static Order createOrder(User user, Shoes shoes, TradingRole tradingRole, String shoesSize, Long price) {
         Order order = new Order();

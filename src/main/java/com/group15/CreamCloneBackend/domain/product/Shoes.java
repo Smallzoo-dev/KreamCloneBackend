@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.group15.CreamCloneBackend.domain.enduporder.EndUpOrder;
 import com.group15.CreamCloneBackend.domain.order.Order;
 import com.group15.CreamCloneBackend.domain.user.UserShoes;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -41,7 +42,7 @@ public class Shoes {
     private Boolean bookMark;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "shoes")
+    @OneToMany(mappedBy = "shoes",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Order> inTradeList;
 
 

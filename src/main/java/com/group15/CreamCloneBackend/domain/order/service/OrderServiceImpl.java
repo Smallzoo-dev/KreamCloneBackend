@@ -150,7 +150,7 @@ public class OrderServiceImpl implements OrderService {
         sizeEachPriceList.add(new SizeEachPrice("260", priceCheck("260", shoesFound)));
         sizeEachPriceList.add(new SizeEachPrice("270", priceCheck("270", shoesFound)));
         sizeEachPriceList.add(new SizeEachPrice("280", priceCheck("280", shoesFound)));
-        return new SizePrice(sizeEachPriceList);
+        return new SizePrice(sizeEachPriceList, 200L, "모든 사이즈 즉시 구매가 조회 성공");
     }
 
     // 사이즈별 매물 가격 조회 편의 메서드
