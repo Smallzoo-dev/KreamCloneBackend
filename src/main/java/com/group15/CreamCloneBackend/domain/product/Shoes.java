@@ -28,12 +28,9 @@ public class Shoes {
 
     private String modelNumber;
 
-    private String ImgUrl;
-
     private String modelName;
 
     private String releaseDate;
-
 
     private Long bookmarkCnt=0L;
 

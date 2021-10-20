@@ -4,7 +4,7 @@ import com.group15.CreamCloneBackend.domain.user.Enum.ResponseMsg;
 import com.group15.CreamCloneBackend.domain.user.Enum.StatusCode;
 import com.group15.CreamCloneBackend.domain.user.dto.UserRequestDto;
 import com.group15.CreamCloneBackend.domain.user.dto.UserResponseDto;
-import com.group15.CreamCloneBackend.domain.user.service.UserService;
+import com.group15.CreamCloneBackend.domain.user.service.UserServiceImpl;
 import com.group15.CreamCloneBackend.security.UserDetailsImpl;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 public class UserRestController {
-    private final UserService userService;
+    private final UserServiceImpl userService;
 
     //회원가입
     @ApiOperation(value = "회원가입",notes = "회원가입")
