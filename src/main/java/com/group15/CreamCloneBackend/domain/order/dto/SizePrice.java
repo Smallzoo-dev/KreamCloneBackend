@@ -11,4 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 public class SizePrice {
     private List<SizeEachPrice> sizeEachPriceList;
+    private Long statusCode;
+    private String msg;
 }

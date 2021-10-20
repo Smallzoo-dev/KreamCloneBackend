@@ -28,8 +28,8 @@ public class OrderRestController {
         OrderResponseDto response = orderService.order(
                 userDetails.getUser().getId(),
                 productid,
-                TradingRole.valueOf(orderRequestDto.getRequestType()),
-                TradeType.valueOf(orderRequestDto.getPurchaseType()),
+                TradingRole.fromString(orderRequestDto.getRequestType()),
+                TradeType.fromString(orderRequestDto.getPurchaseType()),
                 orderRequestDto.getSize(),
                 orderRequestDto.getPriceExpected()
         );

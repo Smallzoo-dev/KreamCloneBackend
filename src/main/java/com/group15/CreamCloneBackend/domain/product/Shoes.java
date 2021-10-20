@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.group15.CreamCloneBackend.domain.enduporder.EndUpOrder;
 import com.group15.CreamCloneBackend.domain.order.Order;
 import com.group15.CreamCloneBackend.domain.user.UserShoes;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,21 +23,42 @@ public class Shoes {
 
     private String brand;
 
-    private Long priceOriginal;
+    private String image;
+
+    private String priceOriginal;
 
     private String modelNumber;
+
+    private String ImgUrl;
+
+    private String modelName;
+
+    private String releaseDate;
+
 
     private Long bookmarkCnt=0L;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "shoes")
+    @OneToMany(mappedBy = "shoes",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Order> inTradeList;
+
 
     @OneToMany(mappedBy = "shoes", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<EndUpOrder> endUpTradeList;
 
     @OneToMany(mappedBy = "shoes", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<UserShoes> likedUserList;
+
+
+    public Shoes(ProductDto productDto){
+        this.bookmarkCnt = 0L;
+        this.image = productDto.getImage();
+        this.brand = productDto.getBrand();
+        this.modelNumber = productDto.getModelNumber();
+        this.modelName = productDto.getModelName();
+        this.priceOriginal = productDto.getPriceOriginal();
+        this.releaseDate = productDto.getReleaseDate();
+    }
 
 
 }
