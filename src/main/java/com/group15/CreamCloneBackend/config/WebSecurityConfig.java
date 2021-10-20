@@ -43,7 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
+        //cors 오류 방지
+        http.cors();
         http.csrf().disable(); // API 집중을 위해 CSRF 무시
         http.httpBasic().disable(); //Http basic Auth 가 생성하는 로그인 창 막기
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);  // jwt token 사용
