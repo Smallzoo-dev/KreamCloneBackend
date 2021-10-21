@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserShoesRepository userShoesRepository;
     private final ShoesRepository shoesRepository;
-    private final OrderRepository orderRepository;
+
 
 
     //회원가입
@@ -47,13 +47,36 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    //password 체크
+    public void passwordCheck(String password) {
+        final int MIN = 8;
+        final int MAX = 16;
+        final String pattern = "^((?=.*[0-9a-zA-Z!@#$%^&*])(?=.*[\\W]).{" + MIN + "," + MAX + "})$";
+        if (!Pattern.matches(pattern, password)) {
+            throw new IllegalArgumentException("비밀번호 입력 오류");
+        }
+    }
+
+    //username으로 들어오는 email 체크
+    public void usernameCheck(String username) {
+        final String pattern = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
+        if (!Pattern.matches(pattern, username)) {
+            throw new IllegalArgumentException("올바른 이메일 형식이 아닙니다.");
+        }
+        User found = userRepository.findByUsername(username);
+        if (found != null) {
+            throw new IllegalArgumentException("중복 이메일 오류.");
+        }
+    }
+
+
     //로그인
     public UserResponseDto userlogin(UserRequestDto userRequestDto) {
         UserResponseDto responseDto;
 
         User user = userRepository.findByUsername(userRequestDto.getUsername());
 
-        if (user==null) {
+        if (user == null) {
 
             responseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(), ResponseMsg.MSG_FAILE_LOGIN_USERNAME.getMsg());
 
@@ -72,33 +95,31 @@ public class UserServiceImpl implements UserService {
 
     //북마크
     @Transactional
-    public UserResponseDto bookmark(User user, BookmarkRequestDto bookmark){
+    public UserResponseDto bookmark(User user, BookmarkRequestDto bookmark) {
 
         UserResponseDto userResponseDto;
 
         Optional<Shoes> shoes = shoesRepository.findById(bookmark.getProductId());
         //신발 정보가 존재하는지 체크
-        if (!shoes.isPresent()){
+        if (!shoes.isPresent()) {
 
-            userResponseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(),ResponseMsg.MSG_NOFOUND_SHOES.getMsg() );
+            userResponseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(), ResponseMsg.MSG_NOFOUND_SHOES.getMsg());
 
-        }else {
+        } else {
 
-            if (!bookmark.getBookmark()){ //북마크가 되어있지 않을 때 북마크 추가
-                shoes.get().setBookmarkCnt(shoes.get().getBookmarkCnt()+1L);
+            if (!bookmark.getBookmark()) { //북마크가 되어있지 않을 때 북마크 추가
+                shoes.get().setBookmarkCnt(shoes.get().getBookmarkCnt() + 1L);
                 Shoes shoes1 = shoes.get();
 
-                UserShoes userShoes = new UserShoes(user,shoes1);
+                UserShoes userShoes = new UserShoes(user, shoes1);
                 userShoesRepository.save(userShoes);
                 userResponseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(),
                         ResponseMsg.MSG_SUCCESS_BOOKMARK.getMsg(),
                         shoes1.getBookmarkCnt());
-            }
-
-            else { //북마크가 되어있을 때 북마크 삭제
-                shoes.get().setBookmarkCnt(shoes.get().getBookmarkCnt()-1L);
+            } else { //북마크가 되어있을 때 북마크 삭제
+                shoes.get().setBookmarkCnt(shoes.get().getBookmarkCnt() - 1L);
                 Shoes shoes1 = shoes.get();
-                UserShoes userShoes = userShoesRepository.findByUserAndShoes(user,shoes1);
+                UserShoes userShoes = userShoesRepository.findByUserAndShoes(user, shoes1);
 
                 userShoesRepository.delete(userShoes);
                 userResponseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(),
@@ -112,38 +133,18 @@ public class UserServiceImpl implements UserService {
 
 
     //북마크 리스트 가져오기
-    public List<Shoes> getBookmarkList(User user){
+    public List<Shoes> getBookmarkList(User user) {
 
         List<UserShoes> userShoesList = userShoesRepository.findAllByUser(user);
         List<Shoes> shoesList = new ArrayList<>();
 
         for (UserShoes userShoes : userShoesList) {
-            Shoes shoes =userShoes.getShoes();
+            Shoes shoes = userShoes.getShoes();
             shoesList.add(shoes);
-       }
+        }
         return shoesList;
 
     }
 
-    public void passwordCheck(String password) {
-        final int MIN = 8;
-        final int MAX = 16;
-        final String pattern = "^((?=.*[0-9a-zA-Z!@#$%^&*])(?=.*[\\W]).{" + MIN + "," + MAX + "})$";
-        if (!Pattern.matches(pattern, password)) {
-            throw new IllegalArgumentException("비밀번호 입력 오류");
-        }
-    }
 
-    public void usernameCheck(String username) {
-        final String pattern = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
-        if (!Pattern.matches(pattern, username)) {
-            throw new IllegalArgumentException("올바른 이메일 형식이 아닙니다.");
-        }
-        User found = userRepository.findByUsername(username);
-        if (found!=null) {
-            throw new IllegalArgumentException("중복 이메일 오류.");
-        }
-    }
 }
-
-
