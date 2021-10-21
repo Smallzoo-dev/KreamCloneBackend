@@ -1,7 +1,5 @@
 package com.group15.CreamCloneBackend.controller;
 
-import com.group15.CreamCloneBackend.domain.product.Shoes;
-import com.group15.CreamCloneBackend.domain.product.dto.MainDto;
 import com.group15.CreamCloneBackend.domain.product.dto.MainReponseDto;
 import com.group15.CreamCloneBackend.domain.product.dto.ShoesDto;
 import com.group15.CreamCloneBackend.domain.product.dto.ShoesReponseDto;
@@ -12,10 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -23,12 +18,7 @@ public class ShoesRestController {
 
     private final ShoesService shoesService;
 
-    /**
-     * 로그인 안 한 경우 : 거래가 = 발매가
-     * 로그인 한 경우 : 거래가 = 발매가, (만약 거래가 있으면) 즉시구매가
-     * @param userDetails
-     * @return
-     */
+
     @ApiOperation(value = "메인페이지",notes = "메인페이지 성공 , 실패 여부 반환")
     @GetMapping("/")
     public MainReponseDto getList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
