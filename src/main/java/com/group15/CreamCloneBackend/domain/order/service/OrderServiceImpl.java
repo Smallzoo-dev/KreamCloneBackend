@@ -177,13 +177,14 @@ public class OrderServiceImpl implements OrderService {
 
 
         //최근 거래 가격 세팅
-        List<EndUpOrder> endUpOrderByShoes = endUpOrderRepository.findAllByShoesOrderByMatchingPriceDesc(shoes);
+        List<EndUpOrder> endUpOrderByShoes = endUpOrderRepository.findAllByShoesOrderByMatchingPriceAsc(shoes);
         if (endUpOrderByShoes.size() == 0) {
             singleSizeResponseDto.setPriceRecent("null");
             singleSizeResponseDto.setMsg("최근 거래내역 없음");
         }
         else {
             singleSizeResponseDto.setPriceRecent(decFormat.format(endUpOrderByShoes.get(0).getMatchingPrice()));
+            singleSizeResponseDto.setMsg("성공");
         }
 
         // 판매 가격 세팅
