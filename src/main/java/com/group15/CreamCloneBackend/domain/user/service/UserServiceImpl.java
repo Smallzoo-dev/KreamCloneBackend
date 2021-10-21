@@ -1,14 +1,12 @@
 package com.group15.CreamCloneBackend.domain.user.service;
 
-import com.group15.CreamCloneBackend.domain.order.Order;
 import com.group15.CreamCloneBackend.domain.order.repository.OrderRepository;
 import com.group15.CreamCloneBackend.domain.product.Shoes;
-import com.group15.CreamCloneBackend.domain.product.dto.MainDto;
 import com.group15.CreamCloneBackend.domain.product.repository.ShoesRepository;
 import com.group15.CreamCloneBackend.domain.user.*;
 import com.group15.CreamCloneBackend.domain.user.Enum.ResponseMsg;
 import com.group15.CreamCloneBackend.domain.user.Enum.StatusCode;
-import com.group15.CreamCloneBackend.domain.user.dto.BookmarkListDto;
+import com.group15.CreamCloneBackend.domain.user.dto.BookmarkRequestDto;
 import com.group15.CreamCloneBackend.domain.user.dto.UserRequestDto;
 import com.group15.CreamCloneBackend.domain.user.dto.UserResponseDto;
 import com.group15.CreamCloneBackend.domain.user.repository.UserRepository;
@@ -73,11 +71,12 @@ public class UserServiceImpl implements UserService {
 
     //북마크
     @Transactional
-    public UserResponseDto bookmark(User user, Long productId, Boolean bookmark){
+    public UserResponseDto bookmark(User user, BookmarkRequestDto bookmark){
 
         UserResponseDto userResponseDto;
 
-        Optional<Shoes> shoes = shoesRepository.findById(productId);
+        Optional<Shoes> shoes = shoesRepository.findById(bookmark.getProductId());
+        System.out.println(shoes.get().getProductId());
         //신발 정보가 존재하는지 체크
         if (!shoes.isPresent()){
 
@@ -85,20 +84,22 @@ public class UserServiceImpl implements UserService {
 
         }else {
 
-            if (!bookmark){ //북마크가 되어있지 않을 때 북마크 추가
+            if (!bookmark.getBookmark()){ //북마크가 되어있지 않을 때 북마크 추가
                 shoes.get().setBookmarkCnt(shoes.get().getBookmarkCnt()+1L);
                 Shoes shoes1 = shoes.get();
                 UserShoes userShoes = new UserShoes(user,shoes1);
                 userShoesRepository.save(userShoes);
                 userResponseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(),
-                        ResponseMsg.MSG_FAILE_SIGNUP.getMsg(),
+                        ResponseMsg.MSG_SUCCESS_BOOKMARK.getMsg(),
                         shoes1.getBookmarkCnt());
             }
 
             else { //북마크가 되어있을 때 북마크 삭제
                 shoes.get().setBookmarkCnt(shoes.get().getBookmarkCnt()-1L);
                 Shoes shoes1 = shoes.get();
-                userShoesRepository.delete(userShoesRepository.findByUserAndShoes(user,shoes1));
+                UserShoes userShoes = userShoesRepository.findByUserAndShoes(user,shoes1);
+
+                userShoesRepository.delete(userShoes);
                 userResponseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(),
                         ResponseMsg.MSG_SUCCESS_DEL_BOOKMARK.getMsg(),
                         shoes1.getBookmarkCnt());

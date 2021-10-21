@@ -3,18 +3,13 @@ package com.group15.CreamCloneBackend.controller;
 import com.group15.CreamCloneBackend.domain.product.Shoes;
 import com.group15.CreamCloneBackend.domain.user.Enum.ResponseMsg;
 import com.group15.CreamCloneBackend.domain.user.Enum.StatusCode;
-import com.group15.CreamCloneBackend.domain.user.dto.BookmarkListDto;
-import com.group15.CreamCloneBackend.domain.user.dto.OrderListDto;
-import com.group15.CreamCloneBackend.domain.user.dto.UserRequestDto;
-import com.group15.CreamCloneBackend.domain.user.dto.UserResponseDto;
+import com.group15.CreamCloneBackend.domain.user.dto.*;
 import com.group15.CreamCloneBackend.domain.user.service.MypageServiceImpl;
-import com.group15.CreamCloneBackend.domain.user.service.UserService;
 import com.group15.CreamCloneBackend.domain.user.service.UserServiceImpl;
 import com.group15.CreamCloneBackend.security.UserDetailsImpl;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -69,8 +64,11 @@ public class UserRestController {
     @ApiOperation(value = "북마크",notes = "북마크 변경 성공 여부 리턴- 북마크 변경 성공:200 실패:500")
     @PostMapping("/user/bookmark")
     public UserResponseDto bookmark(@AuthenticationPrincipal UserDetailsImpl userDetails,
-                                    @RequestBody Long productId,@RequestBody Boolean bookmark ){
-        return userService.bookmark(userDetails.getUser(),productId,bookmark);
+                                    @RequestBody BookmarkRequestDto bookmarkRequestDto){
+        System.out.println("userDetails = " + userDetails.getUsername());
+        System.out.println("bookmarkRequestDto = " + bookmarkRequestDto.getProductId());
+        System.out.println("bookmarkRequestDto = " + bookmarkRequestDto.getBookmark());
+        return userService.bookmark(userDetails.getUser(),bookmarkRequestDto);
 
     }
 
@@ -78,7 +76,7 @@ public class UserRestController {
     //마이페이지
     @ApiOperation(value = "마이페이지",notes = "구매목록, 판매목록, 북마크리스트, 상태코드")
     @GetMapping("/mypage")
-    public BookmarkListDto getMypage(@AuthenticationPrincipal UserDetailsImpl userDetails){
+    public BookmarkResponseDto getMypage(@AuthenticationPrincipal UserDetailsImpl userDetails){
 
         // 구매목록, 판매목록 담기
         OrderListDto OrderListDto = mypageService.getBuyAndSellList(userDetails.getUser());
@@ -88,6 +86,6 @@ public class UserRestController {
         UserResponseDto responseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(),
                ResponseMsg.MSG_LOAD_SUCCESS_MYPAGE.getMsg() );
 
-         return new BookmarkListDto(OrderListDto,likeShoesList,responseDto);
+         return new BookmarkResponseDto(OrderListDto,likeShoesList,responseDto);
     }
 }
