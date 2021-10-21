@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MainDto {
-    private Long productId;
+    private Long id;
     private String brand;
     private String modelName;
     private String image;
@@ -19,7 +19,7 @@ public class MainDto {
 
 
    public MainDto(Shoes shoes){
-        this.productId = shoes.getId();
+        this.id = shoes.getId();
         this.brand = shoes.getBrand();
         this.modelName = shoes.getModelName();
         this.image = shoes.getImage();
