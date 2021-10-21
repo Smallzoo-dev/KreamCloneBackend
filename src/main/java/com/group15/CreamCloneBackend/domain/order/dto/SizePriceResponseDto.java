@@ -5,12 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class SizePriceResponseDto {
-    private com.group15.CreamCloneBackend.domain.order.dto.priceBuy priceBuy;
+    private List<SizeEachPrice> priceBuy;
     private Long statusCode;
     private String msg;
 }

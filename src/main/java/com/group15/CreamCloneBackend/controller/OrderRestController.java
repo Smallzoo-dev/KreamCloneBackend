@@ -22,14 +22,19 @@ public class OrderRestController {
                                         @RequestBody OrderRequestDto orderRequestDto,
                                         @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
-        OrderResponseDto response = orderService.order(
-                userDetails.getUser().getId(),
-                productid,
-                TradingRole.fromString(orderRequestDto.getRequestType()),
-                TradeType.fromString(orderRequestDto.getPurchaseType()),
-                orderRequestDto.getSize(),
-                orderRequestDto.getPriceExpected()
-        );
-        return response;
+        try {
+            OrderResponseDto response = orderService.order(
+                    userDetails.getUser().getId(),
+                    productid,
+                    TradingRole.fromString(orderRequestDto.getRequestType()),
+                    TradeType.fromString(orderRequestDto.getPurchaseType()),
+                    orderRequestDto.getSize(),
+                    orderRequestDto.getPriceExpected()
+            );
+            return response;
+        } catch (Exception e) {
+            OrderResponseDto response = new OrderResponseDto(500L, e.getMessage());
+            return response;
+        }
     }
 }
