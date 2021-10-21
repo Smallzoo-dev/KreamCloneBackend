@@ -33,10 +33,16 @@ public class UserRestController {
     @ApiOperation(value = "회원가입",notes = "회원가입")
     @PostMapping("/user/signup")
     public UserResponseDto userSignup( @RequestBody UserRequestDto userRequestDto){
-        userService.passwordCheck(userRequestDto.getPassword());
-        userService.usernameCheck(userRequestDto.getUsername());
 
-        return userService.usersignup(userRequestDto);
+        try {
+            userService.passwordCheck(userRequestDto.getPassword());
+            userService.usernameCheck(userRequestDto.getUsername());
+            return userService.usersignup(userRequestDto);
+        }
+        catch (Exception e){
+            return new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(), e.getMessage());
+        }
+
 
     }
 
