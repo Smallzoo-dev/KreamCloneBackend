@@ -8,7 +8,7 @@ public class UserRequestDto {
     private final String username;
     private final String password;
 
-    UserRequestDto(String username, String password){
+    public UserRequestDto(String username, String password){
 
         this.username=username;
 
