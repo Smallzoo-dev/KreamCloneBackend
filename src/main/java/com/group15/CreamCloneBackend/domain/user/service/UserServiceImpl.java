@@ -93,6 +93,7 @@ public class UserServiceImpl implements UserService {
         return responseDto;
     }
 
+
     //북마크
     @Transactional
     public UserResponseDto bookmark(User user, BookmarkRequestDto bookmark) {
