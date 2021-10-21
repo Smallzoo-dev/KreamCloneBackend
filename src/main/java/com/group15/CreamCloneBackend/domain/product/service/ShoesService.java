@@ -10,6 +10,7 @@ import com.group15.CreamCloneBackend.domain.user.repository.UserShoesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +61,8 @@ public class ShoesService {
     }
 
     public List<MainDto> setPriceAndLike(User user, List<MainDto> productList) {
+
+        DecimalFormat decFormat = new DecimalFormat("###,###");
         List<Shoes> collect = shoesRepository.findAll().stream()
                 .filter(s -> s.getInTradeList().size() > 0).collect(Collectors.toList());
         List<UserShoes> likedShoesList = userShoesRepository.findAllByUser(user);
@@ -73,7 +76,8 @@ public class ShoesService {
             for (Shoes shoes : collect) {
                 MainDto mainDto = productListMap.get(shoes.getId());
                 Long price = shoes.getInTradeList().get(0).getPrice();
-                mainDto.setPrice(price.toString());
+                mainDto.setPrice(decFormat.format(price)+"원");
+                mainDto.setIsOriginPrice(false);
                 productListMap.put(shoes.getId(), mainDto);
             }
         }

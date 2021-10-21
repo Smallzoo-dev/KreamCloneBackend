@@ -38,17 +38,16 @@ public class ShoesRestController {
 
     @ApiOperation(value = "상세페이지",notes = "상세페이지 성공 , 실패 여부 반환")
     @GetMapping("/product/{productId}")
-    public ShoesReponseDto showShoes(@PathVariable Long productId){
+    public ShoesDto showShoes(@PathVariable Long productId){
 
         try {
             ShoesDto response = shoesService.showDto(productId);
-            ShoesReponseDto reponseDto = new ShoesReponseDto(response, 200L, "상세페이지 로딩에 실패했습니다");
-            return reponseDto;
+            return response;
         } catch (Exception e) {
-            ShoesReponseDto reponseDto = new ShoesReponseDto();
-            reponseDto.setStatusCode(500L);
-            reponseDto.setMsg("상세페이지 로딩 실패");
-            return reponseDto;
+            ShoesDto shoesDto = new ShoesDto();
+            shoesDto.setStatusCode(500L);
+            shoesDto.setMsg(e.getMessage());
+            return shoesDto;
         }
 
     }
