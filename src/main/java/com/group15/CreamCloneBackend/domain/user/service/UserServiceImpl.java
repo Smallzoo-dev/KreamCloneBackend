@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserShoesRepository userShoesRepository;
     private final ShoesRepository shoesRepository;
-    private final OrderRepository orderRepository;
+//    private final OrderRepository orderRepository;
 
 
     //회원가입
@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
     public void passwordCheck(String password) {
         final int MIN = 8;
         final int MAX = 16;
-        final String pattern = "^((?=.*[0-9a-zA-Z!@#$%^&*])(?=.*[\\W]).{" + MIN + "," + MAX + "})$";
+        final String pattern = "(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*()'/_=+{}-])[0-9a-zA-Z!@#$%^&*()'/_=+{}-]{"+MIN+","+MAX+"}$";
         if (!Pattern.matches(pattern, password)) {
             throw new IllegalArgumentException("비밀번호 입력 오류");
         }
@@ -120,11 +120,12 @@ public class UserServiceImpl implements UserService {
                 userResponseDto = new UserResponseDto(STATUS_SUCCESS.getStatusCode(),
                         MSG_SUCCESS_BOOKMARK.getMsg(),
                         shoes1.getBookmarkCnt());
+
             } else { //북마크가 되어있을 때 북마크 삭제
                 shoes.get().setBookmarkCnt(shoes.get().getBookmarkCnt() - 1L);
                 Shoes shoes1 = shoes.get();
-                UserShoes userShoes = userShoesRepository.findByUserAndShoes(user, shoes1);
 
+                UserShoes userShoes = userShoesRepository.findByUserAndShoes(user, shoes1);
                 userShoesRepository.delete(userShoes);
                 userResponseDto = new UserResponseDto(STATUS_SUCCESS.getStatusCode(),
                         MSG_SUCCESS_DEL_BOOKMARK.getMsg(),
@@ -143,7 +144,7 @@ public class UserServiceImpl implements UserService {
         List<Shoes> shoesList = new ArrayList<>();
 
         for (UserShoes userShoes : userShoesList) {
-            Shoes shoes =userShoes.getShoes();
+            Shoes shoes = userShoes.getShoes();
             shoesList.add(shoes);
        }
         return shoesList;
