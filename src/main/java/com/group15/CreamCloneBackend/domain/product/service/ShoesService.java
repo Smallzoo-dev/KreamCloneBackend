@@ -74,6 +74,7 @@ public class ShoesService {
                 MainDto mainDto = productListMap.get(shoes.getId());
                 Long price = shoes.getInTradeList().get(0).getPrice();
                 mainDto.setPrice(price.toString());
+                mainDto.setIsOriginPrice(false);
                 productListMap.put(shoes.getId(), mainDto);
             }
         }
