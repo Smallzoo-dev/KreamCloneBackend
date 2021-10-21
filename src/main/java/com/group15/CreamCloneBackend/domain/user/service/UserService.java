@@ -19,4 +19,6 @@ public interface UserService {
     List<Shoes> getBookmarkList(User user);
 
     void passwordCheck(String password);
+
+    void usernameCheck(String username);
 }
