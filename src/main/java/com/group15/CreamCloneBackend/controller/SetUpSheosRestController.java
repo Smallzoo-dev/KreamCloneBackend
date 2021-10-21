@@ -3,7 +3,6 @@ package com.group15.CreamCloneBackend.controller;
 import com.group15.CreamCloneBackend.domain.product.dto.ProductDto;
 import com.group15.CreamCloneBackend.domain.product.service.ProductService;
 import com.group15.CreamCloneBackend.domain.product.repository.ShoesRepository;
-import com.group15.CreamCloneBackend.domain.user.repository.UserShoesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +15,6 @@ public class SetUpSheosRestController {
 
     private final ProductService productService;
     private final ShoesRepository shoesRepository;
-    private final UserShoesRepository userShoesRepository;
 
 
     @PostMapping("/product/sheosDataSetup")
@@ -32,14 +30,6 @@ public class SetUpSheosRestController {
     public String deleteSheos(){
 
         shoesRepository.deleteAll();
-        return "삭제됨 ";
-
-    }
-
-    @GetMapping("/bookmark/dropTable")
-    public String deleteUserShoes(){
-
-        userShoesRepository.deleteAll();
         return "삭제됨 ";
 
     }

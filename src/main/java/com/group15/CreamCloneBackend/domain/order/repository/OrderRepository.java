@@ -14,7 +14,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findAllByTradingRoleAndShoesAndShoesSizeAndPriceOrderByCreatedAtDesc(TradingRole tradingRole, Shoes shoes,String shoesSize, Long price);
 
-    List<Order> findAllByTradingRoleAndShoesAndShoesSizeOrderByPriceAsc(TradingRole tradingRole, Shoes shoes, String shoesSize);
+    List<Order> findAllByTradingRoleAndShoesAndShoesSizeOrderByPriceDesc(TradingRole tradingRole, Shoes shoes, String shoesSize);
 
     List<Order> findAllByUser(User user);
 

@@ -6,13 +6,13 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class BookmarkResponseDto {
+public class BookmarkListDto {
 
     private OrderListDto orderListDto;
     private List<Shoes> likeShoesList;
     private UserResponseDto responseDto;
 
-    public BookmarkResponseDto(OrderListDto orderListDto, List<Shoes> likeShoesList, UserResponseDto responseDto){
+    public BookmarkListDto(OrderListDto orderListDto,List<Shoes> likeShoesList,UserResponseDto responseDto){
         this.likeShoesList=likeShoesList;
         this.orderListDto = orderListDto;
         this.responseDto = responseDto;

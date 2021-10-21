@@ -1,5 +1,6 @@
 package com.group15.CreamCloneBackend.domain.order.repository;
 
+import com.group15.CreamCloneBackend.domain.enduporder.repository.EndUpOrderRepository;
 import com.group15.CreamCloneBackend.domain.order.Order;
 import com.group15.CreamCloneBackend.domain.order.TradingRole;
 import com.group15.CreamCloneBackend.domain.product.Shoes;
@@ -11,10 +12,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -77,12 +82,12 @@ class OrderRepositoryTest {
         orderRepository.save(buy9);
         orderRepository.save(buy10);
 
-        List<Order> wantToBuy = orderRepository.findAllByTradingRoleAndShoesAndShoesSizeOrderByPriceAsc(TradingRole.fromString("buy"), shoes, "280");
+        List<Order> wantToBuy = orderRepository.findAllByTradingRoleAndShoesAndShoesSizeOrderByPriceDesc(TradingRole.fromString("buy"), shoes, "280");
 
         //then
         Assertions.assertThat(wantToBuy.size()).isEqualTo(4);
-        Assertions.assertThat(wantToBuy.get(0).getId()).isEqualTo(buy10.getId());
-        Assertions.assertThat(wantToBuy.get(3).getId()).isEqualTo(buy7.getId());
+        Assertions.assertThat(wantToBuy.get(3).getId()).isEqualTo(buy10.getId());
+        Assertions.assertThat(wantToBuy.get(0).getId()).isEqualTo(buy7.getId());
 
 
 

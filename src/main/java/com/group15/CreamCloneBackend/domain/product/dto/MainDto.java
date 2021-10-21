@@ -1,6 +1,7 @@
 package com.group15.CreamCloneBackend.domain.product.dto;
 
 import com.group15.CreamCloneBackend.domain.product.Shoes;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +17,7 @@ public class MainDto {
     private Boolean bookMark = false;
     private String price;
     private String modelNumber;
+    private Boolean isOriginPrice = true;
 
 
    public MainDto(Shoes shoes){

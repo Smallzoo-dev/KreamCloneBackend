@@ -22,12 +22,7 @@ public class ShoesController {
 
     private final ShoesService shoesService;
 
-    /**
-     * 로그인 안 한 경우 : 거래가 = 발매가
-     * 로그인 한 경우 : 거래가 = 발매가, (만약 거래가 있으면) 즉시구매가
-     * @param userDetails
-     * @return
-     */
+
     @GetMapping("/")
     public MainReponseDto getList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         if (userDetails == null) {
@@ -40,14 +35,8 @@ public class ShoesController {
     @ApiOperation(value = "상세페이지",notes = "상태 코드값, 메시지")
     @GetMapping("/product/{productId}")
     public ShoesDto showShoes(@PathVariable Long productId){
-        try {
-            return shoesService.showDto(productId);
-        } catch (Exception e) {
-            ShoesDto shoesDto = new ShoesDto();
-            shoesDto.setStatusCode(500L);
-            shoesDto.setMsg("상세 페이지 로딩 실패");
-            return shoesDto;
-        }
+
+        return shoesService.showDto(productId);
     }
 
 }

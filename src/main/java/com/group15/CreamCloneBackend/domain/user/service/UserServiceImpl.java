@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserShoesRepository userShoesRepository;
     private final ShoesRepository shoesRepository;
-
+    private final OrderRepository orderRepository;
 
 
     //회원가입
@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.findByUsername(userRequestDto.getUsername());
 
-        if (user == null) {
+        if (user==null) {
 
             responseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(), ResponseMsg.MSG_FAILE_LOGIN_USERNAME.getMsg());
 
@@ -133,15 +133,15 @@ public class UserServiceImpl implements UserService {
 
 
     //북마크 리스트 가져오기
-    public List<Shoes> getBookmarkList(User user) {
+    public List<Shoes> getBookmarkList(User user){
 
         List<UserShoes> userShoesList = userShoesRepository.findAllByUser(user);
         List<Shoes> shoesList = new ArrayList<>();
 
         for (UserShoes userShoes : userShoesList) {
-            Shoes shoes = userShoes.getShoes();
+            Shoes shoes =userShoes.getShoes();
             shoesList.add(shoes);
-        }
+       }
         return shoesList;
 
     }

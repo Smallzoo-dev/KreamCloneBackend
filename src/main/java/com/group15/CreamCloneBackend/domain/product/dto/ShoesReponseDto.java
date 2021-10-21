@@ -5,14 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
-@Setter
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MainReponseDto {
-    private List<MainDto> productList;
+public class ShoesReponseDto {
+    private ShoesDto shoesDto;
+
     private Long statusCode;
     private String msg;
 }
