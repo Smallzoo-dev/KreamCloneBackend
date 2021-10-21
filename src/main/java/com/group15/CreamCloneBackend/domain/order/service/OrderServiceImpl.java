@@ -162,7 +162,7 @@ public class OrderServiceImpl implements OrderService {
     private String priceCheck(String size, Long shoesId) {
         Shoes shoes = shoesRepository.findById(shoesId).orElseThrow(() -> new IllegalArgumentException("신발 정보가 존재하지 않습니다."));
         DecimalFormat decFormat = new DecimalFormat("###,###");
-        List<Order> searchedOrder = orderRepository.findAllByTradingRoleAndShoesAndShoesSizeOrderByPriceDesc(SELLER, shoes, size);
+        List<Order> searchedOrder = orderRepository.findAllByTradingRoleAndShoesAndShoesSizeOrderByPriceAsc(SELLER, shoes, size);
         if (searchedOrder.size() == 0) {
             return "구매 입찰";
         }
@@ -177,7 +177,7 @@ public class OrderServiceImpl implements OrderService {
 
 
         //최근 거래 가격 세팅
-        List<EndUpOrder> endUpOrderByShoes = endUpOrderRepository.findAllByShoesOrderByMatchingPriceDesc(shoesId);
+        List<EndUpOrder> endUpOrderByShoes = endUpOrderRepository.findAllByShoesOrderByMatchingPriceAsc(shoes);
         if (endUpOrderByShoes.size() == 0) {
             singleSizeResponseDto.setPriceRecent("null");
             singleSizeResponseDto.setMsg("최근 거래내역 없음");
@@ -187,7 +187,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         // 판매 가격 세팅
-        List<Order> buyList = orderRepository.findAllByTradingRoleAndShoesAndShoesSizeOrderByPriceDesc(BUYER, shoes, shoesSize);
+        List<Order> buyList = orderRepository.findAllByTradingRoleAndShoesAndShoesSizeOrderByPriceAsc(BUYER, shoes, shoesSize);
         if (buyList.size() == 0) {
             singleSizeResponseDto.setPriceSell("판매 입찰");
         } else {
@@ -195,7 +195,7 @@ public class OrderServiceImpl implements OrderService {
         }
 
         // 구매 가격 세팅
-        List<Order> sellList = orderRepository.findAllByTradingRoleAndShoesAndShoesSizeOrderByPriceDesc(SELLER, shoes, shoesSize);
+        List<Order> sellList = orderRepository.findAllByTradingRoleAndShoesAndShoesSizeOrderByPriceAsc(SELLER, shoes, shoesSize);
         if (sellList.size() == 0) {
             singleSizeResponseDto.setPriceBuy("구매 입찰");
         } else {
