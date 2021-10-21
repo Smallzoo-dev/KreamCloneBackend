@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface EndUpOrderRepository extends JpaRepository<EndUpOrder, Long> {
 
-    List<EndUpOrder> findAllByShoesOrderByMatchingPriceDesc(Long shoesId);
+    List<EndUpOrder> findAllByShoesOrderByMatchingPriceDesc(Shoes shoes);
 }
