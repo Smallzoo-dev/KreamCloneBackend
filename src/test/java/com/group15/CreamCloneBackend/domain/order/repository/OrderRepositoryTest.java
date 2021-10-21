@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -85,8 +86,8 @@ class OrderRepositoryTest {
 
         //then
         Assertions.assertThat(wantToBuy.size()).isEqualTo(4);
-        Assertions.assertThat(wantToBuy.get(0).getId()).isEqualTo(buy10.getId());
-        Assertions.assertThat(wantToBuy.get(3).getId()).isEqualTo(buy7.getId());
+        Assertions.assertThat(wantToBuy.get(3).getId()).isEqualTo(buy10.getId());
+        Assertions.assertThat(wantToBuy.get(0).getId()).isEqualTo(buy7.getId());
 
 
 

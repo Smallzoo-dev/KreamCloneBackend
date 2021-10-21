@@ -16,7 +16,8 @@ public class MainDto {
     private String image;
     private Boolean bookMark = false;
     private String price;
-    private Long productId;
+    private String modelNumber;
+    private Boolean isOriginPrice = true;
 
 
    public MainDto(Shoes shoes){
@@ -24,7 +25,7 @@ public class MainDto {
         this.brand = shoes.getBrand();
         this.modelName = shoes.getModelName();
         this.image = shoes.getImage();
-        this.productId = shoes.getProductId();
+        this.modelNumber = shoes.getModelNumber();
         this.price = shoes.getPriceOriginal();
     }
 }
