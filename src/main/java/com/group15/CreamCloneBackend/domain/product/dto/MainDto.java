@@ -16,7 +16,6 @@ public class MainDto {
     private Boolean bookMark = false;
     private String price;
     private String modelNumber;
-    private Boolean isOriginPrice = true;
 
 
    public MainDto(Shoes shoes){
