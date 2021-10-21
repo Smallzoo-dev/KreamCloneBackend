@@ -8,11 +8,13 @@ import com.group15.CreamCloneBackend.domain.user.dto.OrderListDto;
 import com.group15.CreamCloneBackend.domain.user.dto.UserRequestDto;
 import com.group15.CreamCloneBackend.domain.user.dto.UserResponseDto;
 import com.group15.CreamCloneBackend.domain.user.service.MypageServiceImpl;
+import com.group15.CreamCloneBackend.domain.user.service.UserService;
 import com.group15.CreamCloneBackend.domain.user.service.UserServiceImpl;
 import com.group15.CreamCloneBackend.security.UserDetailsImpl;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +32,9 @@ public class UserRestController {
     //회원가입
     @ApiOperation(value = "회원가입",notes = "회원가입")
     @PostMapping("/user/signup")
-    public UserResponseDto userSignup(@RequestBody UserRequestDto userRequestDto){
+    public UserResponseDto userSignup( @RequestBody UserRequestDto userRequestDto){
+        userService.passwordCheck(userRequestDto.getPassword());
+        userService.usernameCheck(userRequestDto.getUsername());
 
         return userService.usersignup(userRequestDto);
 

@@ -22,6 +22,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @RequiredArgsConstructor
 @Service
@@ -120,6 +121,26 @@ public class UserServiceImpl implements UserService {
        }
         return shoesList;
 
+    }
+
+    public void passwordCheck(String password) {
+        final int MIN = 8;
+        final int MAX = 16;
+        final String pattern = "^((?=.*[0-9a-zA-Z!@#$%^&*])(?=.*[\\W]).{" + MIN + "," + MAX + "})$";
+        if (!Pattern.matches(pattern, password)) {
+            throw new IllegalArgumentException("비밀번호 입력 오류");
+        }
+    }
+
+    public void usernameCheck(String username) {
+        final String pattern = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
+        if (!Pattern.matches(pattern, username)) {
+            throw new IllegalArgumentException("올바른 이메일 형식이 아닙니다.");
+        }
+        User found = userRepository.findByUsername(username);
+        if (found!=null) {
+            throw new IllegalArgumentException("중복 이메일 오류.");
+        }
     }
 }
 
