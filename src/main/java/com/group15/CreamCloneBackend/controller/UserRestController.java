@@ -65,9 +65,6 @@ public class UserRestController {
     @PostMapping("/user/bookmark")
     public UserResponseDto bookmark(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                     @RequestBody BookmarkRequestDto bookmarkRequestDto){
-        System.out.println("userDetails = " + userDetails.getUsername());
-        System.out.println("bookmarkRequestDto = " + bookmarkRequestDto.getProductId());
-        System.out.println("bookmarkRequestDto = " + bookmarkRequestDto.getBookmark());
         return userService.bookmark(userDetails.getUser(),bookmarkRequestDto);
 
     }
