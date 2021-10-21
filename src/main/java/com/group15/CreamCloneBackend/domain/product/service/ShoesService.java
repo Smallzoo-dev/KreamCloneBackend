@@ -22,14 +22,6 @@ public class ShoesService {
     private final ShoesRepository shoesRepository;
     private final UserShoesRepository userShoesRepository;
 
-    public Shoes showShoes(Long Id){
-
-        return shoesRepository.findById(Id).orElseThrow(
-                () -> new NullPointerException("존재하지 않는 상품입니다.")
-            );
-        }
-
-
     public ShoesDto showDto(Long Id){
         Shoes shoes = shoesRepository.findById(Id).orElseThrow(
                 () -> new IllegalArgumentException("반환이 없습니다")

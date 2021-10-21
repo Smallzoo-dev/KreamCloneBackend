@@ -7,11 +7,12 @@ import lombok.Setter;
 
 import java.util.Date;
 
-@NoArgsConstructor
 @Getter
 @Setter
 @AllArgsConstructor
 public class ShoesDto {
+
+
     private String brand;
     private String modelName;
     private String image;
@@ -19,5 +20,7 @@ public class ShoesDto {
     private String modelNumber;
     private String releaseDate;
     private String priceOriginal;
+
+
 
 }
