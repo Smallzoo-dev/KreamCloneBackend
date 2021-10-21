@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static com.group15.CreamCloneBackend.domain.user.Enum.ResponseMsg.*;
+import static com.group15.CreamCloneBackend.domain.user.Enum.StatusCode.*;
+
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
@@ -43,7 +46,7 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(user);
 
-        return new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(), ResponseMsg.MSG_SUCCESS_SIGNUP.getMsg());
+        return new UserResponseDto(STATUS_SUCCESS.getStatusCode(), MSG_SUCCESS_SIGNUP.getMsg());
 
     }
 
@@ -78,17 +81,17 @@ public class UserServiceImpl implements UserService {
 
         if (user==null) {
 
-            responseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(), ResponseMsg.MSG_FAILE_LOGIN_USERNAME.getMsg());
+            responseDto = new UserResponseDto(STATUS_FAILE.getStatusCode(), MSG_FAILE_LOGIN_USERNAME.getMsg());
 
         } else if (!passwordEncoder.matches(userRequestDto.getPassword(), user.getPassword())) {
 
-            responseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(), ResponseMsg.MSG_FAILE_LOGIN_PASSWORD.getMsg());
+            responseDto = new UserResponseDto(STATUS_FAILE.getStatusCode(), MSG_FAILE_LOGIN_PASSWORD.getMsg());
 
         } else {
             //로그인 성공 시
             String token = jwtTokenProvider.createToken(userRequestDto.getUsername());
 
-            responseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(), ResponseMsg.MSG_SUCCESS_LOGIN.getMsg(), token);
+            responseDto = new UserResponseDto(STATUS_SUCCESS.getStatusCode(), MSG_SUCCESS_LOGIN.getMsg(), token);
         }
         return responseDto;
     }
@@ -103,7 +106,7 @@ public class UserServiceImpl implements UserService {
         //신발 정보가 존재하는지 체크
         if (!shoes.isPresent()) {
 
-            userResponseDto = new UserResponseDto(StatusCode.STATUS_FAILE.getStatusCode(), ResponseMsg.MSG_NOFOUND_SHOES.getMsg());
+            userResponseDto = new UserResponseDto(STATUS_FAILE.getStatusCode(), MSG_NOFOUND_SHOES.getMsg());
 
         } else {
 
@@ -113,8 +116,8 @@ public class UserServiceImpl implements UserService {
 
                 UserShoes userShoes = new UserShoes(user, shoes1);
                 userShoesRepository.save(userShoes);
-                userResponseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(),
-                        ResponseMsg.MSG_SUCCESS_BOOKMARK.getMsg(),
+                userResponseDto = new UserResponseDto(STATUS_SUCCESS.getStatusCode(),
+                        MSG_SUCCESS_BOOKMARK.getMsg(),
                         shoes1.getBookmarkCnt());
             } else { //북마크가 되어있을 때 북마크 삭제
                 shoes.get().setBookmarkCnt(shoes.get().getBookmarkCnt() - 1L);
@@ -122,8 +125,8 @@ public class UserServiceImpl implements UserService {
                 UserShoes userShoes = userShoesRepository.findByUserAndShoes(user, shoes1);
 
                 userShoesRepository.delete(userShoes);
-                userResponseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(),
-                        ResponseMsg.MSG_SUCCESS_DEL_BOOKMARK.getMsg(),
+                userResponseDto = new UserResponseDto(STATUS_SUCCESS.getStatusCode(),
+                        MSG_SUCCESS_DEL_BOOKMARK.getMsg(),
                         shoes1.getBookmarkCnt());
             }
 
