@@ -35,25 +35,14 @@ public class ShoesService {
                 () -> new IllegalArgumentException("반환이 없습니다")
         );
 
-        ShoesDto shoesDto = new ShoesDto(shoes.getBrand(), shoes.getModelName(), shoes.getImage()
-                , shoes.getBookmarkCnt(), shoes.getModelNumber(), shoes.getReleaseDate() , shoes.getPriceOriginal());
-
+        ShoesDto shoesDto = new ShoesDto(shoes);
+        shoesDto.setStatusCode(200L);
+        shoesDto.setMsg("상세페이지 로딩 성공");
         return shoesDto;
 
     }
-//    public Shoes createTest() {
-//
-//        Shoes shoes = new Shoes("123","123","123");
-//        shoesRepository.save(shoes);
-//
-//        return null;
-//    }
-    /**
-     * 메인페이지에 북마크 true , false 여부 체크
-     * userDto에서
-     * likedShoesList 체크 ? 유저정보를 확인해서 북마크 반환
-     *
-     * 전체신발 리스트에서 신발 하나의 리스트를 가져와서 해당 신발의 북마크여부 확인 후 boolean 형과 비교..?     */
+
+
 
     public List<MainDto> getList() {
         List<MainDto> dtos = new ArrayList<MainDto>();
@@ -75,7 +64,7 @@ public class ShoesService {
                 .filter(s -> s.getInTradeList().size() > 0).collect(Collectors.toList());
         List<UserShoes> likedShoesList = userShoesRepository.findAllByUser(user);
         Map<Long, MainDto> productListMap = productList.stream().collect(Collectors.toMap(
-                i1 -> i1.getId(),
+                i1 -> i1.getProductId(),
                 i2 -> i2
         ));
 

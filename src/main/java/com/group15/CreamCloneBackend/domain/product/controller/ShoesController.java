@@ -40,8 +40,14 @@ public class ShoesController {
     @ApiOperation(value = "상세페이지",notes = "상태 코드값, 메시지")
     @GetMapping("/product/{productId}")
     public ShoesDto showShoes(@PathVariable Long productId){
-
-        return shoesService.showDto(productId);
+        try {
+            return shoesService.showDto(productId);
+        } catch (Exception e) {
+            ShoesDto shoesDto = new ShoesDto();
+            shoesDto.setStatusCode(500L);
+            shoesDto.setMsg("상세 페이지 로딩 실패");
+            return shoesDto;
+        }
     }
 
 }

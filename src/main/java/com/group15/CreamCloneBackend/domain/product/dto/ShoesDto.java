@@ -1,5 +1,6 @@
 package com.group15.CreamCloneBackend.domain.product.dto;
 
+import com.group15.CreamCloneBackend.domain.product.Shoes;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 public class ShoesDto {
+    private Long productId;
     private String brand;
     private String modelName;
     private String image;
@@ -19,5 +21,21 @@ public class ShoesDto {
     private String modelNumber;
     private String releaseDate;
     private String priceOriginal;
+    private Long statusCode;
+    private String msg;
+
+    public ShoesDto(Shoes shoes) {
+        this.productId = shoes.getId();
+        this.brand = shoes.getBrand();
+        this.modelName = shoes.getModelName();
+        this.image = shoes.getImage();
+        this.bookMarkCnt = shoes.getBookmarkCnt();
+        this.modelNumber = shoes.getModelNumber();
+        this.releaseDate = shoes.getReleaseDate();
+        this.priceOriginal = shoes.getPriceOriginal();
+    }
+
 
 }
+
+
