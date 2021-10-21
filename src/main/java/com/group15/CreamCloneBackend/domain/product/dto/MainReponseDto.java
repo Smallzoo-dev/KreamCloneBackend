@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class MainReponseDto {
-    private List<MainDto> mainDtos;
+    private List<MainDto> productList;
     private Long statusCode;
     private String msg;
 }
