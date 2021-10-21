@@ -137,12 +137,12 @@ public class OrderServiceImpl implements OrderService {
 
     // 사이즈별 매물 가격 조회
     public SizePriceResponseDto getSizePrice(Long shoesId) {
-        SizePrice sizePrice = findPriceFromDB(shoesId);
+        priceBuy sizePrice = findPriceFromDB(shoesId);
         return new SizePriceResponseDto(sizePrice, 200L, "모든 사이즈 즉시 구매가 조회 성공");
     }
 
     // 사이즈별 매물 가격 조회 편의 메서드
-    private SizePrice findPriceFromDB(Long shoesFound) {
+    private priceBuy findPriceFromDB(Long shoesFound) {
         List<SizeEachPrice> sizeEachPriceList = new ArrayList<>();
         sizeEachPriceList.add(new SizeEachPrice("230", priceCheck("230", shoesFound)));
         sizeEachPriceList.add(new SizeEachPrice("240", priceCheck("240", shoesFound)));
@@ -150,7 +150,7 @@ public class OrderServiceImpl implements OrderService {
         sizeEachPriceList.add(new SizeEachPrice("260", priceCheck("260", shoesFound)));
         sizeEachPriceList.add(new SizeEachPrice("270", priceCheck("270", shoesFound)));
         sizeEachPriceList.add(new SizeEachPrice("280", priceCheck("280", shoesFound)));
-        return new SizePrice(sizeEachPriceList, 200L, "모든 사이즈 즉시 구매가 조회 성공");
+        return new priceBuy(sizeEachPriceList);
     }
 
     // 사이즈별 매물 가격 조회 편의 메서드
@@ -194,7 +194,7 @@ public class OrderServiceImpl implements OrderService {
         if (sellList.size() == 0) {
             singleSizeResponseDto.setPriceBuy("구매 입찰");
         } else {
-            singleSizeResponseDto.setPriceBuy(decFormat.format((sellList.get(-1).getPrice())));
+            singleSizeResponseDto.setPriceBuy(decFormat.format((sellList.get(0).getPrice())));
         }
 
         singleSizeResponseDto.setStatusCode(200L);

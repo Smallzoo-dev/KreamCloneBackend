@@ -9,8 +9,6 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-public class SizePrice {
+public class priceBuy {
     private List<SizeEachPrice> sizeEachPriceList;
-    private Long statusCode;
-    private String msg;
 }

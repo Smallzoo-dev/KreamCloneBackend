@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SizePriceResponseDto {
-    private SizePrice priceBuy;
+    private com.group15.CreamCloneBackend.domain.order.dto.priceBuy priceBuy;
     private Long statusCode;
     private String msg;
 }
