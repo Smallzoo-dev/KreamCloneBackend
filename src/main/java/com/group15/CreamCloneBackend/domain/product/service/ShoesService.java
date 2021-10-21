@@ -64,7 +64,7 @@ public class ShoesService {
                 .filter(s -> s.getInTradeList().size() > 0).collect(Collectors.toList());
         List<UserShoes> likedShoesList = userShoesRepository.findAllByUser(user);
         Map<Long, MainDto> productListMap = productList.stream().collect(Collectors.toMap(
-                i1 -> i1.getProductId(),
+                i1 -> i1.getId(),
                 i2 -> i2
         ));
 
@@ -74,6 +74,7 @@ public class ShoesService {
                 MainDto mainDto = productListMap.get(shoes.getId());
                 Long price = shoes.getInTradeList().get(0).getPrice();
                 mainDto.setPrice(price.toString());
+                mainDto.setIsOriginPrice(false);
                 productListMap.put(shoes.getId(), mainDto);
             }
         }
