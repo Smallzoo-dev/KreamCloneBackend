@@ -87,6 +87,7 @@ public class UserRestController {
             MypageResponseDto myPageData = mypageService.getMyPageData(userDetails.getUser());
             myPageData.setStatusCode(200L);
             myPageData.setMsg("마이페이지 로딩 성공");
+            myPageData.setUserName(userDetails.getUsername());
             return myPageData;
         } catch (Exception e) {
             MypageResponseDto mypageResponseDto = new MypageResponseDto();

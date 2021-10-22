@@ -19,6 +19,7 @@ public class MypageResponseDto {
 
     private Long statusCode;
     private String msg;
+    private String userName;
 
 
     public MypageResponseDto(List<mypageOrderDto> buyList, List<mypageOrderDto> sellList, List<bookmarkListDto> bookmarkList) {
