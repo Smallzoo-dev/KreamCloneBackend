@@ -78,10 +78,10 @@ https://www.notion.so/Starting-Assignment-18ddfbed21ba4d9ab8a4aec28bcaa360
 유저의 관심 상품 조회(bookmark), 상품의 받은 관심 수를 표현하기 위해 사용합니다.
 
 2. User Table은 Order Table과 1:M 연관관계를 가집니다
-유저가 현재 입찰을 통해 참여한 거래의 목록을 mypage에서 확인 가능
+유저가 현재 입찰을 통해 참여한 거래의 목록을 mypage에서 확인 가능합니다.
 
 3. Order Table은 Shoes Table과 M:1 연관관계를 가집니다
-해당 신발에 현재 생성되어있는 구매, 판매 입찰을 조회 하기 위해 사용
+해당 신발에 현재 생성되어있는 구매, 판매 입찰을 조회 하기 위해 사용합니다.
 
 4. Order Table은 한가지의 Enum Column(TRADING ROLE, TRADETYPE)을 가지고 두개(BUY, SELL)의 거래 종류로 구분됩니다
 그리고 Order Table의 Create, Delete는 두가지(Bidding, Matching)요청에 의해 발생합니다
@@ -94,3 +94,9 @@ https://www.notion.so/Starting-Assignment-18ddfbed21ba4d9ab8a4aec28bcaa360
 
 8. Matching으로 제거된 거래건은 EndupOrder Table에 저장되어 최근 거래가격으로 활용됩니다.
 
+---
+✔ 도메인 설계 & 로직
+
+1. 조회 로직에서 query dsl이나 jpql을 사용 할 수 있었다면, 쿼리를 많이 줄일 수 있었을 것 같습니다.
+2. 확장을 염두에 둔 설계를 하지 못했습니다. 신발이 아닌 다른 상품들이 추가되거나 다른 서비스가 추가된다면 기존 코드에 영향이 클 것 같습니다.
+3. 테스트 코드 작성은 선택사항이 아니라 개발의 가장 핵심적인 사항인데 테스트코드 작성을 하지 못했습니다. 결과적으로는 스코프가 너무 컸던 것 같습니다.
