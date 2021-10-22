@@ -76,7 +76,7 @@ https://www.notion.so/Starting-Assignment-18ddfbed21ba4d9ab8a4aec28bcaa360
 유저의 관심 상품 조회(bookmark), 상품의 받은 관심 수를 표현하기 위해 사용합니다.
 2. User Table은 Order Table과 1:M 연관관계를 가집니다
 유저가 현재 입찰을 통해 참여한 거래의 목록을 mypage에서 확인 가능
-3. Order Table은 Shoes Table과 M:1 연관관계를 가집니다
+3-3. Order Table은 Shoes Table과 M:1 연관관계를 가집니다
 해당 신발에 현재 생성되어있는 구매, 판매 입찰을 조회 하기 위해 사용
 4. Order Table은 한가지의 Enum Column(TRADING ROLE, TRADETYPE)을 가지고 두개(BUY, SELL)의 거래 종류로 구분됩니다
 그리고 Order Table의 Create, Delete는 두가지(Bidding, Matching)요청에 의해 발생합니다
