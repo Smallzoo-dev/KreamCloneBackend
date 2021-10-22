@@ -47,11 +47,6 @@ Kream은 한정판 신발 거래 사이트입니다. 모든 거래 체결 내역
 
 https://www.notion.so/Starting-Assignment-18ddfbed21ba4d9ab8a4aec28bcaa360
 
-
-✔ 데이터베이스 설계
-
-![테이블설계](https://user-images.githubusercontent.com/78454649/138403107-229ded63-4b8e-42d5-95d7-d1e0586ac607.png)
-
 ---
 
 ✔ API 설계
@@ -59,3 +54,16 @@ https://www.notion.so/Starting-Assignment-18ddfbed21ba4d9ab8a4aec28bcaa360
 ![API1](https://user-images.githubusercontent.com/78454649/138403070-98ded899-76d2-4e9f-b300-1d4604e73996.PNG)
 ![API2](https://user-images.githubusercontent.com/78454649/138403079-faf9dc4a-b6b2-4afb-91f5-8c594cdf37fc.PNG)
 ![API3](https://user-images.githubusercontent.com/78454649/138403087-68981181-1df4-4d77-9cfe-5c3ac5072620.PNG)
+
+---
+
+✔ 데이터베이스 설계
+
+![테이블설계](https://user-images.githubusercontent.com/78454649/138403107-229ded63-4b8e-42d5-95d7-d1e0586ac607.png)
+
+---
+
+✔ DB TABLE JPA 
+
+![DB JPA](https://user-images.githubusercontent.com/78454649/138405691-60087260-25ce-452d-92e4-8122e5853253.PNG)
+![DB JPA2](https://user-images.githubusercontent.com/78454649/138405693-57050e2a-f01e-4db4-a0d6-60877d2a4c7e.PNG)
