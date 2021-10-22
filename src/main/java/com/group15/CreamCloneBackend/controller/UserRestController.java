@@ -79,7 +79,7 @@ public class UserRestController {
 //         return new BookmarkResponseDto(OrderListDto,likeShoesList,responseDto);
 //    }
 
-    //마이페이지 2
+    //마이페이지 2 username 추가
     @ApiOperation(value = "마이페이지",notes = "구매목록, 판매목록, 북마크리스트, 상태코드")
     @GetMapping("/mypage")
     public MypageResponseDto getMypage(@AuthenticationPrincipal UserDetailsImpl userDetails){
