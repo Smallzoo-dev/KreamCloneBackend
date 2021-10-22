@@ -59,7 +59,7 @@ https://www.notion.so/Starting-Assignment-18ddfbed21ba4d9ab8a4aec28bcaa360
 
 ✔ 데이터베이스 설계
 
-![테이블설계](https://user-images.githubusercontent.com/78454649/138403107-229ded63-4b8e-42d5-95d7-d1e0586ac607.png)
+![테이블설계 수정](https://user-images.githubusercontent.com/78454649/138409205-999b70bd-2f5d-4c9d-82f6-ab95fae0fff9.png)
 
 ---
 
