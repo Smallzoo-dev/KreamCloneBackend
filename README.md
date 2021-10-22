@@ -83,9 +83,12 @@ https://www.notion.so/Starting-Assignment-18ddfbed21ba4d9ab8a4aec28bcaa360
 
 4. Order Table은 한가지의 Enum Column(TRADING ROLE, TRADETYPE)을 가지고 두개(BUY, SELL)의 거래 종류로 구분됩니다
 그리고 Order Table의 Create, Delete는 두가지(Bidding, Matching)요청에 의해 발생합니다
- 4-1) Bidding(입찰) 요청인 경우 Table에 Buy또는 Sell 거래를 생성합니다. 해당 거래의 입찰요청은 구매요청인 경우 즉시구매가보다 적은 금액일 수 없고, 판매 요청인 경우 즉시 판매가보다 클 수 없습니다.
- 4-2) Matching(즉시거래) 요청의 경우 이미 클라이언트에 제공된 즉시 구매가/판매가(테이블의 최저, 최고가)를 통해서만 요청이 가능합니다.
- 4-3) 클라이언트로부터 Matching요청을 전달받은 경우 테이블에서 해당 가격의 거래를 찾고, 생성순서로 정렬하여 가장 오래된 거래를 삭제시킵니다.
+
+4-1) Bidding(입찰) 요청인 경우 Table에 Buy또는 Sell 거래를 생성합니다. 해당 거래의 입찰요청은 구매요청인 경우 즉시구매가보다 적은 금액일 수 없고, 판매 요청인 경우 즉시 판매가보다 클 수 없습니다.
+
+4-2) Matching(즉시거래) 요청의 경우 이미 클라이언트에 제공된 즉시 구매가/판매가(테이블의 최저, 최고가)를 통해서만 요청이 가능합니다.
+
+4-3) 클라이언트로부터 Matching요청을 전달받은 경우 테이블에서 해당 가격의 거래를 찾고, 생성순서로 정렬하여 가장 오래된 거래를 삭제시킵니다.
  
 5. Matching으로 제거된 거래건은 EndupOrder Table에 저장되어 최근 거래가격으로 활용됩니다.
 
