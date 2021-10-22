@@ -57,11 +57,13 @@ https://www.notion.so/Starting-Assignment-18ddfbed21ba4d9ab8a4aec28bcaa360
 
 ---
 
+## Backend Side
+
+
 ✔ 데이터베이스 설계
 
 ![테이블설계 수정](https://user-images.githubusercontent.com/78454649/138409205-999b70bd-2f5d-4c9d-82f6-ab95fae0fff9.png)
 
----
 
 ✔ DB TABLE JPA 
 
@@ -71,7 +73,7 @@ https://www.notion.so/Starting-Assignment-18ddfbed21ba4d9ab8a4aec28bcaa360
 ![JPA ENDUP](https://user-images.githubusercontent.com/78454649/138419939-57b2554a-9888-4723-bb00-d26672fccbe7.PNG)
 
 
----
+
 ✔ 도메인 설계 & 로직
 
 1. User Table과 Shoes Table과의 연관관계를 설정하기 위해 1:M - 중간 엔티티 - M:1 연관관계로 구현했습니다.
@@ -94,9 +96,12 @@ https://www.notion.so/Starting-Assignment-18ddfbed21ba4d9ab8a4aec28bcaa360
 
 8. Matching으로 제거된 거래건은 EndupOrder Table에 저장되어 최근 거래가격으로 활용됩니다.
 
----
-✔ 도메인 설계 & 로직
+✔ 
 
 1. 조회 로직에서 query dsl이나 jpql을 사용 할 수 있었다면, 쿼리를 많이 줄일 수 있었을 것 같습니다.
 2. 확장을 염두에 둔 설계를 하지 못했습니다. 신발이 아닌 다른 상품들이 추가되거나 다른 서비스가 추가된다면 기존 코드에 영향이 클 것 같습니다.
 3. 테스트 코드 작성은 선택사항이 아니라 개발의 가장 핵심적인 사항인데 테스트코드 작성을 하지 못했습니다. 결과적으로는 스코프가 너무 컸던 것 같습니다.
+
+---
+
+## Frontend Side
