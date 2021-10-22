@@ -103,6 +103,8 @@ public class UserServiceImpl implements UserService {
 
         UserResponseDto userResponseDto;
 
+
+
         Optional<Shoes> shoes = shoesRepository.findById(bookmark.getProductId());
         //신발 정보가 존재하는지 체크
         if (!shoes.isPresent()) {
@@ -117,6 +119,8 @@ public class UserServiceImpl implements UserService {
 
                 UserShoes userShoes = new UserShoes(user, shoes1);
                 userShoesRepository.save(userShoes);
+
+
                 userResponseDto = new UserResponseDto(STATUS_SUCCESS.getStatusCode(),
                         MSG_SUCCESS_BOOKMARK.getMsg(),
                         shoes1.getBookmarkCnt());

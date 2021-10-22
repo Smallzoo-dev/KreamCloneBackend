@@ -48,17 +48,17 @@ public class MypageServiceImpl implements MypageService{
         List<mypageOrderDto> sellList = new ArrayList<>();
         List<bookmarkListDto> bookmarkList = new ArrayList<>();
 
-        List<Order> buyOrders = orderRepository.findAllByTradingRoleAndUserOrderByCreatedAtAsc(SELLER, user);
-        if (!buyOrders.isEmpty()) {
-            for (Order order : buyOrders) {
-                buyList.add(new mypageOrderDto(order));
+        List<Order> sellOrders  = orderRepository.findAllByTradingRoleAndUserOrderByCreatedAtAsc(SELLER, user);
+        if (!sellOrders.isEmpty()) {
+            for (Order order : sellOrders) {
+                sellList.add(new mypageOrderDto(order));
             }
         }
 
-        List<Order> sellOrders = orderRepository.findAllByTradingRoleAndUserOrderByCreatedAtAsc(BUYER, user);
-        if (!sellList.isEmpty()) {
-            for (Order sellOrder : sellOrders) {
-                sellList.add(new mypageOrderDto(sellOrder));
+        List<Order> buyOrders = orderRepository.findAllByTradingRoleAndUserOrderByCreatedAtAsc(BUYER, user);
+        if (!buyOrders.isEmpty()) {
+            for (Order buyOrder : buyOrders) {
+                buyList.add(new mypageOrderDto(buyOrder));
             }
         }
 
