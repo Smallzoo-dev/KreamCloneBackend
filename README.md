@@ -37,7 +37,7 @@ Kream은 한정판 신발 거래 사이트입니다. 모든 거래 체결 내역
  | Front        | Back                         |
  | ------------ | ---------------------------- |
  | React, Redux | Spring boot, Spring Security |
- | Axios, Immer | MySQL , AWS RDS              |
+ | Axios, Immer | MySQL , AWS RDS, JWT         |
  | S3           | AWS                          |
 
  
