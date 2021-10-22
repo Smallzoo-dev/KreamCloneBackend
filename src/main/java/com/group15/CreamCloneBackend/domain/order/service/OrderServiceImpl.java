@@ -167,6 +167,7 @@ public class OrderServiceImpl implements OrderService {
             return "구매 입찰";
         }
         else
+
             return decFormat.format(searchedOrder.get(0).getPrice());
     }
 

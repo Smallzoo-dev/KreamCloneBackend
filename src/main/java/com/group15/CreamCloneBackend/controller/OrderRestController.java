@@ -22,6 +22,12 @@ public class OrderRestController {
                                         @RequestBody OrderRequestDto orderRequestDto,
                                         @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
+
+        if (orderRequestDto.isNullRequest()) {
+            return new OrderResponseDto(500L, "잘못된 요청 입니다.");
+        }
+
+
         try {
             OrderResponseDto response = orderService.order(
                     userDetails.getUser().getId(),
