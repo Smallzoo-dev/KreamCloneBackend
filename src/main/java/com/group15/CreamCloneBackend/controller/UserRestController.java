@@ -64,18 +64,36 @@ public class UserRestController {
 
 
     //마이페이지
+//    @ApiOperation(value = "마이페이지",notes = "구매목록, 판매목록, 북마크리스트, 상태코드")
+//    @GetMapping("/mypage")
+//    public BookmarkResponseDto getMypage(@AuthenticationPrincipal UserDetailsImpl userDetails){
+//
+//        // 구매목록, 판매목록 담기
+//        OrderListDto OrderListDto = mypageService.getBuyAndSellList(userDetails.getUser());
+//
+//        List<Shoes> likeShoesList = userService.getBookmarkList(userDetails.getUser());
+//
+//        UserResponseDto responseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(),
+//               ResponseMsg.MSG_LOAD_SUCCESS_MYPAGE.getMsg() );
+//
+//         return new BookmarkResponseDto(OrderListDto,likeShoesList,responseDto);
+//    }
+
+    //마이페이지 2
     @ApiOperation(value = "마이페이지",notes = "구매목록, 판매목록, 북마크리스트, 상태코드")
     @GetMapping("/mypage")
-    public BookmarkResponseDto getMypage(@AuthenticationPrincipal UserDetailsImpl userDetails){
+    public MypageResponseDto getMypage(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        try {
+            MypageResponseDto myPageData = mypageService.getMyPageData(userDetails.getUser());
+            myPageData.setStatusCode(200L);
+            myPageData.setMsg("마이페이지 로딩 성공");
+            return myPageData;
+        } catch (Exception e) {
+            MypageResponseDto mypageResponseDto = new MypageResponseDto();
+            mypageResponseDto.setMsg(e.getMessage());
+            mypageResponseDto.setStatusCode(500L);
+            return mypageResponseDto;
+        }
 
-        // 구매목록, 판매목록 담기
-        OrderListDto OrderListDto = mypageService.getBuyAndSellList(userDetails.getUser());
-
-        List<Shoes> likeShoesList = userService.getBookmarkList(userDetails.getUser());
-
-        UserResponseDto responseDto = new UserResponseDto(StatusCode.STATUS_SUCCESS.getStatusCode(),
-               ResponseMsg.MSG_LOAD_SUCCESS_MYPAGE.getMsg() );
-
-         return new BookmarkResponseDto(OrderListDto,likeShoesList,responseDto);
     }
 }
