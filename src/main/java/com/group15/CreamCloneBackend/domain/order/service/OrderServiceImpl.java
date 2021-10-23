@@ -30,7 +30,7 @@ public class OrderServiceImpl implements OrderService {
     private final EndUpOrderRepository endUpOrderRepository;
 
 
-    //분기용 메서드
+    //분기용 메서드 test 1
     @Override
     public OrderResponseDto order(Long userId, Long shoesId, TradingRole tradingRole, TradeType tradeType, String shoeSize, Long price) {
         // case : 원하는 가격으로 입찰
