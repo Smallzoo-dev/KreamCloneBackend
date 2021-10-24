@@ -57,31 +57,51 @@ https://www.notion.so/Starting-Assignment-18ddfbed21ba4d9ab8a4aec28bcaa360
 
 ---
 
+## Backend Side
+
+
 ✔ 데이터베이스 설계
 
 ![테이블설계 수정](https://user-images.githubusercontent.com/78454649/138409205-999b70bd-2f5d-4c9d-82f6-ab95fae0fff9.png)
 
----
 
 ✔ DB TABLE JPA 
 
-![DB JPA](https://user-images.githubusercontent.com/78454649/138405691-60087260-25ce-452d-92e4-8122e5853253.PNG)
-![DB JPA2](https://user-images.githubusercontent.com/78454649/138405693-57050e2a-f01e-4db4-a0d6-60877d2a4c7e.PNG)
+![JPA USER](https://user-images.githubusercontent.com/78454649/138419913-357d8bd3-ff25-4290-930f-96fbfe66e123.PNG)
+![JPA SHOES](https://user-images.githubusercontent.com/78454649/138419924-58f6edfb-8510-46ec-8e10-5684846c43c0.PNG)
+![JPA ORDER](https://user-images.githubusercontent.com/78454649/138419934-2100609b-296e-419a-adc2-dcc310806d04.PNG)
+![JPA ENDUP](https://user-images.githubusercontent.com/78454649/138419939-57b2554a-9888-4723-bb00-d26672fccbe7.PNG)
 
 
----
+
 ✔ 도메인 설계 & 로직
 
 1. User Table과 Shoes Table과의 연관관계를 설정하기 위해 1:M - 중간 엔티티 - M:1 연관관계로 구현했습니다.
 유저의 관심 상품 조회(bookmark), 상품의 받은 관심 수를 표현하기 위해 사용합니다.
+
 2. User Table은 Order Table과 1:M 연관관계를 가집니다
-유저가 현재 입찰을 통해 참여한 거래의 목록을 mypage에서 확인 가능
+유저가 현재 입찰을 통해 참여한 거래의 목록을 mypage에서 확인 가능합니다.
+
 3. Order Table은 Shoes Table과 M:1 연관관계를 가집니다
-해당 신발에 현재 생성되어있는 구매, 판매 입찰을 조회 하기 위해 사용
+해당 신발에 현재 생성되어있는 구매, 판매 입찰을 조회 하기 위해 사용합니다.
+
 4. Order Table은 한가지의 Enum Column(TRADING ROLE, TRADETYPE)을 가지고 두개(BUY, SELL)의 거래 종류로 구분됩니다
 그리고 Order Table의 Create, Delete는 두가지(Bidding, Matching)요청에 의해 발생합니다
-5. Bidding(입찰) 요청인 경우 Table에 Buy또는 Sell 거래를 생성합니다. 해당 거래의 입찰요청은 구매요청인 경우 즉시구매가보다 적은 금액일 수 없고, 판매 요청인 경우 즉시 판매가보다 클 수 없습니다.
+
+5. Bidding(입찰) 요청인 경우 Table에 Buy또는 Sell 거래를 생성합니다. 해당 거래의 입찰요청은 구매요청인 경우 즉시구매가보다 큰 금액일 수 없고, 판매 요청인 경우 즉시 판매가보다 적은 금액일 수 없습니다.
+
 6. Matching(즉시거래) 요청의 경우 이미 클라이언트에 제공된 즉시 구매가/판매가(테이블의 최저, 최고가)를 통해서만 요청이 가능합니다.
+
 7. 클라이언트로부터 Matching요청을 전달받은 경우 테이블에서 해당 가격의 거래를 찾고, 생성순서로 정렬하여 가장 오래된 거래를 삭제시킵니다.
+
 8. Matching으로 제거된 거래건은 EndupOrder Table에 저장되어 최근 거래가격으로 활용됩니다.
 
+✔ 
+
+1. 조회 로직에서 query dsl이나 jpql을 사용 할 수 있었다면, 쿼리를 많이 줄일 수 있었을 것 같습니다.
+2. 확장을 염두에 둔 설계를 하지 못했습니다. 신발이 아닌 다른 상품들이 추가되거나 다른 서비스가 추가된다면 기존 코드에 영향이 클 것 같습니다.
+3. 테스트 코드 작성은 선택사항이 아니라 개발의 가장 핵심적인 사항인데 테스트코드 작성을 하지 못했습니다. 결과적으로는 스코프가 너무 컸던 것 같습니다.
+
+---
+
+## Frontend Side
