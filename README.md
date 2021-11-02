@@ -5,10 +5,10 @@
 Kream은 한정판 신발 거래 사이트입니다. 모든 거래 체결 내역과 입찰가를 공개하여 구매자는 구매할 상품(구매입찰/ 즉시 구매)을 선택하며
 판매자는 판매할 상품(판매입찰 / 즉시판매)을 등록하여 구매자와 판매차가 원하는 가격이 일치하면 거래가 체결되는 시스템입니다.
 
-:mag: 프로젝트 주소 
+:mag: 프로젝트 주소 :
 http://kream-clone-coding.s3-website.ap-northeast-2.amazonaws.com/
 
-:tv: 데모영상
+:tv: 데모영상 : 
 https://www.youtube.com/watch?v=ic_AzvTs58s
 ---
 
